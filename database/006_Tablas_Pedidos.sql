@@ -48,7 +48,7 @@ CREATE TABLE dbo.Pedidos
     ClaveIdempotencia       UNIQUEIDENTIFIER  NOT NULL,
     NombreDestinatario      NVARCHAR(150)     NOT NULL,
     TelefonoDestinatario    VARCHAR(20)       NOT NULL,
-    DireccionEntrega        NVARCHAR(600)     NOT NULL,
+    DireccionEntrega        NVARCHAR(800)     NOT NULL,
     Subtotal                DECIMAL(12,2)     NOT NULL,
     Descuento               DECIMAL(12,2)     NOT NULL CONSTRAINT DF_Pedidos_Descuento DEFAULT (0),
     CostoEnvio              DECIMAL(12,2)     NOT NULL CONSTRAINT DF_Pedidos_CostoEnvio DEFAULT (0),
