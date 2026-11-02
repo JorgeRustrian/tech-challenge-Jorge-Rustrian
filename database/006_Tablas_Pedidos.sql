@@ -217,6 +217,6 @@ BEGIN
                 AND t.IDEstadoDestino = i.IDEstadoPedido
           )
     )
-        THROW 50010, 'Transicion de estado de pedido no permitida.', 1;
+        THROW 50409, 'Transicion de estado de pedido no permitida.', 1;
 END
 GO

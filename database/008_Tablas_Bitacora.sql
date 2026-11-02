@@ -40,6 +40,6 @@ ON dbo.Bitacora
 INSTEAD OF UPDATE, DELETE
 AS
 BEGIN
-    THROW 50020, 'La bitacora no se puede modificar ni eliminar.', 1;
+    THROW 50403, 'La bitacora no se puede modificar ni eliminar.', 1;
 END
 GO
