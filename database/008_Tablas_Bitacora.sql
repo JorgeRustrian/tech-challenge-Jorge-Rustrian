@@ -9,7 +9,7 @@ SET ANSI_NULLS ON;
 SET QUOTED_IDENTIFIER ON;
 GO
 
--- ValorAnterior / ValorNuevo en JSON con solo los campos que cambiaron.
+-- ValorAnterior / ValorNuevo: la fila completa en JSON antes y después del cambio.
 CREATE TABLE dbo.Bitacora
 (
     IDBitacora      BIGINT IDENTITY(1,1) NOT NULL,
@@ -25,7 +25,7 @@ CREATE TABLE dbo.Bitacora
     CONSTRAINT PK_Bitacora PRIMARY KEY (IDBitacora),
     CONSTRAINT FK_Bitacora_Usuarios FOREIGN KEY (IDUsuario) REFERENCES dbo.Usuarios (IDUsuario),
     CONSTRAINT CK_Bitacora_Modulo CHECK (Modulo IN ('CATALOGO', 'INVENTARIO', 'CUPONES', 'PEDIDOS', 'SEGURIDAD')),
-    CONSTRAINT CK_Bitacora_Accion CHECK (Accion IN ('CREAR', 'MODIFICAR', 'DESACTIVAR', 'ACTIVAR')),
+    CONSTRAINT CK_Bitacora_Accion CHECK (Accion IN ('CREAR', 'MODIFICAR', 'DESACTIVAR', 'ACTIVAR', 'ELIMINAR')),
     CONSTRAINT CK_Bitacora_ValorAnterior CHECK (ValorAnterior IS NULL OR ISJSON(ValorAnterior) = 1),
     CONSTRAINT CK_Bitacora_ValorNuevo CHECK (ValorNuevo IS NULL OR ISJSON(ValorNuevo) = 1)
 );
