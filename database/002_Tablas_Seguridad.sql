@@ -1,20 +1,15 @@
 /*
     002_Tablas_Seguridad.sql
-    Módulo de seguridad: roles, usuarios, refresh tokens y direcciones de clientes.
+    Roles, usuarios, refresh tokens y direcciones.
 */
 USE ShopCart;
 GO
 
--- Requeridos por índices filtrados y columnas calculadas, sin importar el cliente usado.
 SET ANSI_NULLS ON;
 SET QUOTED_IDENTIFIER ON;
 GO
 
-/* ---------------------------------------------------------------------------
-   Roles
-   El sistema maneja exactamente tres roles. El backend los identifica por
-   Codigo, nunca por IDRol.
---------------------------------------------------------------------------- */
+-- El backend identifica los roles por Codigo, no por IDRol.
 CREATE TABLE dbo.Roles
 (
     IDRol   INT IDENTITY(1,1) NOT NULL,
@@ -27,11 +22,6 @@ CREATE TABLE dbo.Roles
 );
 GO
 
-/* ---------------------------------------------------------------------------
-   Usuarios
-   Los usuarios no se eliminan: se desactivan con Activo = 0.
-   La collation CI hace que UQ_Usuarios_Correo no distinga mayúsculas.
---------------------------------------------------------------------------- */
 CREATE TABLE dbo.Usuarios
 (
     IDUsuario           INT IDENTITY(1,1) NOT NULL,
@@ -57,12 +47,8 @@ GO
 CREATE INDEX IX_Usuarios_IDRol ON dbo.Usuarios (IDRol);
 GO
 
-/* ---------------------------------------------------------------------------
-   RefreshTokens
-   Se guarda el hash SHA-256 del token, nunca el token en claro.
-   IDFamilia agrupa todos los tokens nacidos de un mismo login: si se presenta
-   un token ya rotado (posible robo), se revoca toda la familia.
---------------------------------------------------------------------------- */
+-- Se guarda el hash del token. IDFamilia agrupa los tokens de un mismo login
+-- para revocarlos todos si llega un token ya rotado.
 CREATE TABLE dbo.RefreshTokens
 (
     IDRefreshToken      INT IDENTITY(1,1) NOT NULL,
@@ -79,7 +65,6 @@ CREATE TABLE dbo.RefreshTokens
     CONSTRAINT FK_RefreshTokens_Reemplazo FOREIGN KEY (IDTokenReemplazo) REFERENCES dbo.RefreshTokens (IDRefreshToken),
     CONSTRAINT UQ_RefreshTokens_TokenHash UNIQUE (TokenHash),
     CONSTRAINT CK_RefreshTokens_Expiracion CHECK (FechaExpiracion > FechaCreacion),
-    -- Un token reemplazado por rotación tiene que estar revocado.
     CONSTRAINT CK_RefreshTokens_Reemplazo CHECK (IDTokenReemplazo IS NULL OR FechaRevocacion IS NOT NULL)
 );
 GO
@@ -88,12 +73,6 @@ CREATE INDEX IX_RefreshTokens_IDUsuario ON dbo.RefreshTokens (IDUsuario);
 CREATE INDEX IX_RefreshTokens_IDFamilia ON dbo.RefreshTokens (IDFamilia);
 GO
 
-/* ---------------------------------------------------------------------------
-   Direcciones
-   Un cliente puede tener varias direcciones; a lo sumo una predeterminada.
-   Se desactivan en lugar de eliminarse, porque los pedidos guardan su propia
-   copia de la dirección al momento de la compra.
---------------------------------------------------------------------------- */
 CREATE TABLE dbo.Direcciones
 (
     IDDireccion         INT IDENTITY(1,1) NOT NULL,
@@ -120,7 +99,7 @@ GO
 
 CREATE INDEX IX_Direcciones_IDUsuario ON dbo.Direcciones (IDUsuario);
 
--- La base de datos garantiza una sola dirección predeterminada activa por cliente.
+-- Solo una dirección predeterminada activa por cliente.
 CREATE UNIQUE INDEX UX_Direcciones_Predeterminada
     ON dbo.Direcciones (IDUsuario)
     WHERE EsPredeterminada = 1 AND Activo = 1;

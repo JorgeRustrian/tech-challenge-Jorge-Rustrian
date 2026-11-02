@@ -1,19 +1,14 @@
 /*
     003_Tablas_Catalogo.sql
-    Módulo de catálogo: categorías, productos, imágenes y variantes.
+    Categorías, productos, imágenes y variantes.
 */
 USE ShopCart;
 GO
 
--- Requeridos por índices filtrados y columnas calculadas, sin importar el cliente usado.
 SET ANSI_NULLS ON;
 SET QUOTED_IDENTIFIER ON;
 GO
 
-/* ---------------------------------------------------------------------------
-   Categorias
-   Categorías planas (sin jerarquía). Se desactivan, no se eliminan.
---------------------------------------------------------------------------- */
 CREATE TABLE dbo.Categorias
 (
     IDCategoria         INT IDENTITY(1,1) NOT NULL,
@@ -29,11 +24,7 @@ CREATE TABLE dbo.Categorias
 );
 GO
 
-/* ---------------------------------------------------------------------------
-   Productos
-   Artículo general del catálogo. El precio y la existencia viven en Variantes.
-   Un producto con ventas asociadas no se elimina: se desactiva (Activo = 0).
---------------------------------------------------------------------------- */
+-- Precio y existencia van en Variantes.
 CREATE TABLE dbo.Productos
 (
     IDProducto          INT IDENTITY(1,1) NOT NULL,
@@ -54,10 +45,7 @@ CREATE INDEX IX_Productos_IDCategoria ON dbo.Productos (IDCategoria);
 CREATE INDEX IX_Productos_Nombre ON dbo.Productos (Nombre);
 GO
 
-/* ---------------------------------------------------------------------------
-   ProductoImagenes
-   Imágenes de un producto. Orden = 1 es la imagen principal.
---------------------------------------------------------------------------- */
+-- Orden = 1 es la imagen principal.
 CREATE TABLE dbo.ProductoImagenes
 (
     IDProductoImagen    INT IDENTITY(1,1) NOT NULL,
@@ -74,15 +62,7 @@ CREATE TABLE dbo.ProductoImagenes
 );
 GO
 
-/* ---------------------------------------------------------------------------
-   Variantes
-   Combinación vendible de un producto (talla y color) con SKU, precio y
-   existencia propios. El precio incluye IVA del 12 %.
-
-   ExistenciaFisica solo la modifican los SPs de inventario, siempre junto con
-   su movimiento en el kardex. ExistenciaReservada la modifican las reservas
-   del checkout. CK_Variantes_Reservada impide la sobreventa a nivel de BD.
---------------------------------------------------------------------------- */
+-- Precio con IVA incluido. ExistenciaFisica solo se mueve junto con su registro en Kardex.
 CREATE TABLE dbo.Variantes
 (
     IDVariante              INT IDENTITY(1,1) NOT NULL,
@@ -101,12 +81,12 @@ CREATE TABLE dbo.Variantes
     CONSTRAINT PK_Variantes PRIMARY KEY (IDVariante),
     CONSTRAINT FK_Variantes_Productos FOREIGN KEY (IDProducto) REFERENCES dbo.Productos (IDProducto),
     CONSTRAINT UQ_Variantes_SKU UNIQUE (SKU),
-    -- No puede haber dos variantes con la misma talla y color en un producto.
     CONSTRAINT UQ_Variantes_ProductoTallaColor UNIQUE (IDProducto, Talla, Color),
     CONSTRAINT CK_Variantes_SKU CHECK (LEN(LTRIM(SKU)) > 0),
     CONSTRAINT CK_Variantes_Precio CHECK (Precio > 0),
     CONSTRAINT CK_Variantes_ExistenciaFisica CHECK (ExistenciaFisica >= 0),
     CONSTRAINT CK_Variantes_ExistenciaReservada CHECK (ExistenciaReservada >= 0),
+    -- Barrera final contra sobreventa.
     CONSTRAINT CK_Variantes_Reservada CHECK (ExistenciaReservada <= ExistenciaFisica)
 );
 GO
