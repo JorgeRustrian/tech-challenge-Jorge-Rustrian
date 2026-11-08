@@ -1,0 +1,330 @@
+.cabecera {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1rem;
+  padding-bottom: 1.25rem;
+  border-bottom: 1px solid var(--tinta);
+}
+
+.descripcion {
+  margin-top: 0.35rem;
+  color: var(--tinta-suave);
+}
+
+.total {
+  flex-shrink: 0;
+  color: var(--tinta-suave);
+  font-size: var(--t-sm);
+}
+
+.cuerpo {
+  display: grid;
+  grid-template-columns: 13.5rem minmax(0, 1fr);
+  gap: 2.5rem;
+  margin-top: 1.5rem;
+}
+
+/* ---- Filtros ---- */
+
+.filtros {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  align-self: start;
+  position: sticky;
+  top: 5.5rem;
+}
+
+.grupo {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  min-width: 0;
+}
+
+.grupo legend {
+  margin-bottom: 0.5rem;
+  padding: 0;
+  color: var(--tinta-tenue);
+  font-size: var(--t-xs);
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.listaCategorias {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.listaCategorias button {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  padding: 0.3rem 0 0.3rem 0.6rem;
+  background: none;
+  border: 0;
+  border-left: 2px solid transparent;
+  color: var(--tinta-suave);
+  font-size: var(--t-sm);
+  text-align: left;
+  cursor: pointer;
+}
+
+.listaCategorias button span {
+  color: var(--tinta-tenue);
+  font-size: var(--t-xs);
+}
+
+.listaCategorias button:hover {
+  color: var(--tinta);
+}
+
+.listaCategorias button[aria-pressed='true'] {
+  border-left-color: var(--marca);
+  color: var(--marca);
+  font-weight: 600;
+}
+
+.precioForm {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.5rem;
+}
+
+.precioCampos {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  color: var(--tinta-tenue);
+}
+
+.precioCampos input {
+  width: 5.5rem;
+  height: 2rem;
+  padding: 0 0.5rem;
+  background: var(--superficie);
+  border: 1px solid var(--linea-fuerte);
+  border-radius: var(--radio);
+  font-size: var(--t-sm);
+}
+
+.precioCampos input:focus {
+  outline: none;
+  border-color: var(--marca);
+}
+
+.errorPrecio {
+  color: var(--peligro);
+  font-size: var(--t-xs);
+}
+
+/* ---- Resultados ---- */
+
+.barra {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1.25rem;
+}
+
+.botonFiltros {
+  display: none;
+}
+
+.activos {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.activos button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  height: 1.75rem;
+  padding: 0 0.55rem;
+  background: var(--superficie);
+  border: 1px solid var(--linea-fuerte);
+  border-radius: var(--radio);
+  font-size: var(--t-xs);
+  cursor: pointer;
+}
+
+.activos button:hover {
+  border-color: var(--tinta-suave);
+}
+
+.activos .quitarTodo {
+  background: none;
+  border-color: transparent;
+  color: var(--marca);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.orden {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-left: auto;
+  color: var(--tinta-suave);
+  font-size: var(--t-sm);
+}
+
+.orden select {
+  height: 2rem;
+  padding: 0 1.8rem 0 0.6rem;
+  appearance: none;
+  background: var(--superficie)
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%2357524b' stroke-width='2.2'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E")
+    no-repeat right 0.55rem center;
+  border: 1px solid var(--linea-fuerte);
+  border-radius: var(--radio);
+  color: var(--tinta);
+  font-size: var(--t-sm);
+}
+
+.grilla {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(12.5rem, 1fr));
+  gap: 2rem 1.25rem;
+  margin: 0 0 2rem;
+  padding: 0;
+  list-style: none;
+  transition: opacity 150ms;
+}
+
+.actualizando {
+  opacity: 0.55;
+}
+
+.enlaceTarjeta {
+  display: block;
+  color: inherit;
+  text-decoration: none;
+}
+
+.foto {
+  position: relative;
+  margin-bottom: 0.65rem;
+}
+
+.foto img {
+  transition: transform 300ms ease-out;
+}
+
+.enlaceTarjeta:hover .foto img {
+  transform: scale(1.025);
+}
+
+.enlaceTarjeta:hover .nombre {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.etiquetaAgotado {
+  position: absolute;
+  top: 0.6rem;
+  left: 0.6rem;
+  padding: 0.15rem 0.45rem;
+  background: var(--tinta);
+  color: var(--papel);
+  font-size: var(--t-xs);
+  font-weight: 600;
+  letter-spacing: 0.04em;
+}
+
+.agotado .foto img {
+  opacity: 0.6;
+  filter: grayscale(0.5);
+}
+
+.categoriaTarjeta {
+  color: var(--tinta-tenue);
+  font-size: var(--t-xs);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.nombre {
+  margin-top: 0.15rem;
+  font-family: var(--fuente-texto);
+  font-size: var(--t-base);
+  font-weight: 500;
+  letter-spacing: 0;
+}
+
+.precio {
+  margin-top: 0.2rem;
+  font-weight: 600;
+}
+
+.agotado .precio {
+  color: var(--tinta-tenue);
+}
+
+@media (max-width: 860px) {
+  /* En móvil el panel de filtros se abre debajo del botón que lo muestra. */
+  .cuerpo {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .resultados {
+    display: contents;
+  }
+
+  .resultados > * {
+    order: 3;
+  }
+
+  .resultados > .barra {
+    order: 1;
+  }
+
+  .filtros {
+    order: 2;
+    display: none;
+    align-self: stretch;
+    position: static;
+    margin-bottom: 1.25rem;
+    padding: 1rem;
+    background: var(--superficie);
+    border: 1px solid var(--linea);
+    border-radius: var(--radio);
+  }
+
+  .filtrosAbiertos {
+    display: flex;
+  }
+
+  .botonFiltros {
+    display: inline-flex;
+  }
+
+  .grilla {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1.5rem 0.9rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .cabecera {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.35rem;
+  }
+
+  .orden span {
+    display: none;
+  }
+}

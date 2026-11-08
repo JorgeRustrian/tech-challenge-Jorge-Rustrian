@@ -43,3 +43,9 @@ export function minutosSegundos(totalSegundos: number): string {
   const s = Math.max(0, Math.floor(totalSegundos));
   return `${Math.floor(s / 60)}:${String(s % 60).padStart(2, '0')}`;
 }
+
+// Un producto con variantes de distinto precio se anuncia por el más bajo.
+export function formatoRangoPrecio(min: number | null, max: number | null): string {
+  if (min === null) return 'Sin precio';
+  return min === max || max === null ? formatoMoneda(min) : `Desde ${formatoMoneda(min)}`;
+}

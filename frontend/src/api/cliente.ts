@@ -5,12 +5,15 @@ const BASE = '/api';
 export class ErrorApi extends Error {
   readonly status: number;
   readonly detalles: DetalleError[];
+  // Segundos de espera que pide la API cuando responde 429.
+  readonly reintentarEn: number | null;
 
-  constructor(status: number, mensaje: string, detalles: DetalleError[] = []) {
+  constructor(status: number, mensaje: string, detalles: DetalleError[] = [], reintentarEn: number | null = null) {
     super(mensaje);
     this.name = 'ErrorApi';
     this.status = status;
     this.detalles = detalles;
+    this.reintentarEn = reintentarEn;
   }
 }
 
@@ -80,9 +83,11 @@ function esCuerpoError(valor: unknown): valor is { error: { mensaje: string; det
 }
 
 async function leerError(res: Response): Promise<ErrorApi> {
+  const espera = Number(res.headers.get('Retry-After'));
+  const reintentarEn = res.status === 429 && espera > 0 ? espera : null;
   try {
     const cuerpo: unknown = await res.json();
-    if (esCuerpoError(cuerpo)) return new ErrorApi(res.status, cuerpo.error.mensaje, cuerpo.error.detalles ?? []);
+    if (esCuerpoError(cuerpo)) return new ErrorApi(res.status, cuerpo.error.mensaje, cuerpo.error.detalles ?? [], reintentarEn);
   } catch {
     // Sin cuerpo JSON (por ejemplo, el proxy no alcanzó la API).
   }
@@ -103,8 +108,10 @@ export function renovarSesion(): Promise<Sesion | null> {
   renovacionEnCurso ??= conCandado(async () => {
     const res = await enviar('/auth/refresh', { metodo: 'POST' }, null);
     if (!res.ok) {
+      // Un invitado que abre la página no tenía sesión: no hay nada que avisar.
+      const habiaSesion = accessToken !== null;
       accessToken = null;
-      avisarSesion(null);
+      if (habiaSesion) avisarSesion(null);
       return null;
     }
     const sesion = (await res.json()) as Sesion;

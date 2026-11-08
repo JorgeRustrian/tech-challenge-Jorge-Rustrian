@@ -3,6 +3,7 @@ import { Link, Outlet, useNavigate, useSearchParams } from 'react-router';
 import { esPersonal } from '../auth/roles';
 import { useSesion } from '../auth/sesion';
 import { IconoBolsa, IconoBuscar } from '../componentes/Iconos';
+import { useCarrito, usePuedeComprar } from '../hooks/useCarrito';
 import css from './LayoutTienda.module.css';
 
 function MenuCuenta() {
@@ -54,9 +55,11 @@ function MenuCuenta() {
 }
 
 export function LayoutTienda() {
-  const { usuario } = useSesion();
   const navegar = useNavigate();
   const [params] = useSearchParams();
+  const puedeComprar = usePuedeComprar();
+  const carrito = useCarrito();
+  const articulos = carrito.data?.resumen.cantidadArticulos ?? 0;
 
   function buscar(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -84,10 +87,19 @@ export function LayoutTienda() {
           </form>
           <nav className={css.acciones} aria-label="Cuenta">
             <MenuCuenta />
-            {(!usuario || usuario.rol === 'CLIENTE') && (
-              <Link to="/carrito" className={css.carrito} aria-label="Carrito">
+            {puedeComprar && (
+              <Link
+                to="/carrito"
+                className={css.carrito}
+                aria-label={articulos ? `Carrito, ${articulos} ${articulos === 1 ? 'artículo' : 'artículos'}` : 'Carrito'}
+              >
                 <IconoBolsa />
                 <span aria-hidden="true">Carrito</span>
+                {articulos > 0 && (
+                  <span className={`${css.cuenta} cifras`} aria-hidden="true">
+                    {articulos > 99 ? '99+' : articulos}
+                  </span>
+                )}
               </Link>
             )}
           </nav>

@@ -8,6 +8,7 @@ import { useSesion } from '../../auth/sesion';
 import { Boton } from '../../componentes/Boton';
 import { Entrada } from '../../componentes/Campos';
 import { AvisoError } from '../../componentes/Estados';
+import { useTitulo } from '../../hooks/useTitulo';
 import { erroresEnCampos } from '../../utils/formularios';
 import css from './Formulario.module.css';
 
@@ -21,6 +22,7 @@ type Datos = z.infer<typeof esquema>;
 export function Entrar() {
   const { usuario, entrar } = useSesion();
   const ubicacion = useLocation();
+  useTitulo('Entrar');
   const [errorEnvio, setErrorEnvio] = useState<unknown>(null);
   const {
     register,
@@ -64,7 +66,10 @@ export function Entrar() {
       </form>
 
       <p className={css.alterno}>
-        ¿No tiene cuenta? <Link to="/registro">Cree una aquí</Link>
+        ¿No tiene cuenta?{' '}
+        <Link to="/registro" state={ubicacion.state}>
+          Cree una aquí
+        </Link>
       </p>
     </section>
   );

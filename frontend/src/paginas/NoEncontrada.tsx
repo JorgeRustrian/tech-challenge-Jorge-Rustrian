@@ -1,7 +1,9 @@
 import { BotonEnlace } from '../componentes/Boton';
 import { Vacio } from '../componentes/Estados';
+import { useTitulo } from '../hooks/useTitulo';
 
 export function NoEncontrada() {
+  useTitulo('Página no encontrada');
   return (
     <Vacio
       titulo="Esta página no existe"

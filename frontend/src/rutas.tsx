@@ -5,6 +5,10 @@ import { useSesion } from './auth/sesion';
 import { LayoutPanel } from './layouts/LayoutPanel';
 import { LayoutTienda } from './layouts/LayoutTienda';
 import { Entrar } from './paginas/cuenta/Entrar';
+import { Registro } from './paginas/cuenta/Registro';
+import { Carrito } from './paginas/tienda/Carrito';
+import { Catalogo } from './paginas/tienda/Catalogo';
+import { Producto } from './paginas/tienda/Producto';
 import { ErrorRuta } from './paginas/ErrorRuta';
 import { NoEncontrada } from './paginas/NoEncontrada';
 import { Pendiente } from './paginas/Pendiente';
@@ -19,11 +23,15 @@ export const router = createBrowserRouter([
     element: <LayoutTienda />,
     errorElement: <ErrorRuta />,
     children: [
-      { index: true, element: <Pendiente titulo="Catálogo" /> },
+      { index: true, element: <Catalogo /> },
+      { path: 'producto/:id', element: <Producto /> },
+      { path: 'carrito', element: <Carrito /> },
       { path: 'entrar', element: <Entrar /> },
+      { path: 'registro', element: <Registro /> },
       {
         element: <RutaProtegida roles={['CLIENTE']} />,
         children: [
+          { path: 'checkout', element: <Pendiente titulo="Pago" /> },
           { path: 'cuenta/pedidos', element: <Pendiente titulo="Mis pedidos" /> },
           { path: 'cuenta/direcciones', element: <Pendiente titulo="Direcciones" /> },
         ],

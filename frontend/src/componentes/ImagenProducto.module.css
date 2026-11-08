@@ -1,0 +1,20 @@
+.marco {
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: 4 / 5;
+  background: var(--superficie-hundida);
+  border: 1px solid var(--linea);
+  border-radius: var(--radio);
+}
+
+.marco img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.sinImagen {
+  display: grid;
+  place-items: center;
+  color: var(--linea-fuerte);
+}

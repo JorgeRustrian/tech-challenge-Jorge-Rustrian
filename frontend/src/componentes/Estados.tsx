@@ -23,7 +23,12 @@ export function Vacio({ titulo, texto, accion }: { titulo: string; texto?: strin
 }
 
 export function mensajeDeError(error: unknown): string {
-  return error instanceof ErrorApi ? error.message : 'Ocurrió un error inesperado.';
+  if (!(error instanceof ErrorApi)) return 'Ocurrió un error inesperado.';
+  if (error.status === 429 && error.reintentarEn) {
+    const minutos = Math.ceil(error.reintentarEn / 60);
+    return `Hizo demasiados intentos seguidos. Por seguridad, espere ${minutos === 1 ? '1 minuto' : `${minutos} minutos`} y vuelva a intentar.`;
+  }
+  return error.message;
 }
 
 export function ErrorVista({ error, alReintentar }: { error: unknown; alReintentar?: () => void }) {
