@@ -1,0 +1,31 @@
+.formulario {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.fila {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.filaTres {
+  display: grid;
+  grid-template-columns: 8rem 1fr 1fr;
+  gap: 1rem;
+}
+
+.acciones {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.6rem;
+  padding-top: 0.25rem;
+}
+
+@media (max-width: 560px) {
+  .fila,
+  .filaTres {
+    grid-template-columns: 1fr;
+  }
+}

@@ -1,0 +1,63 @@
+.filtros {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.filtros label {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  font-size: var(--t-xs);
+  font-weight: 600;
+  color: var(--tinta-suave);
+}
+
+.filtros select,
+.filtros input {
+  height: 1.875rem;
+  padding: 0 0.5rem;
+  background: var(--superficie);
+  border: 1px solid var(--linea-fuerte);
+  border-radius: var(--radio);
+  color: var(--tinta);
+  font-size: var(--t-sm);
+  font-weight: 400;
+}
+
+.filtros select:focus,
+.filtros input:focus {
+  outline: none;
+  border-color: var(--marca);
+}
+
+.error {
+  flex-basis: 100%;
+  color: var(--peligro);
+  font-size: var(--t-sm);
+}
+
+.ver {
+  font-size: var(--t-sm);
+  white-space: nowrap;
+}
+
+.vacio {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 3rem 1rem;
+  color: var(--tinta-suave);
+  font-size: var(--t-sm);
+  text-align: center;
+}
+
+.vacioTitulo {
+  font-family: var(--fuente-titulo);
+  font-size: var(--t-md);
+  font-weight: 600;
+  color: var(--tinta);
+}

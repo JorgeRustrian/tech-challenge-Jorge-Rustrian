@@ -1,0 +1,56 @@
+.lista {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(17rem, 1fr));
+  gap: 1rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.tarjeta {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  padding: 1rem 1.1rem;
+  background: var(--superficie);
+  border: 1px solid var(--linea);
+  border-radius: var(--radio);
+  font-size: var(--t-sm);
+}
+
+.principal {
+  border-color: var(--marca);
+  box-shadow: inset 3px 0 0 var(--marca);
+}
+
+.titulo {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  margin-bottom: 0.35rem;
+}
+
+.titulo h2 {
+  font-size: var(--t-md);
+}
+
+.texto {
+  color: var(--tinta-suave);
+}
+
+.acciones {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  margin-top: auto;
+  padding-top: 0.9rem;
+}
+
+.eliminar {
+  margin-left: auto;
+}
+
+.eliminar:hover:not(:disabled) {
+  color: var(--peligro);
+}

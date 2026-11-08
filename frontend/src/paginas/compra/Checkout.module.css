@@ -1,0 +1,294 @@
+.cabecera {
+  padding-bottom: 1.25rem;
+  border-bottom: 1px solid var(--tinta);
+}
+
+.volver {
+  display: inline-block;
+  margin-bottom: 0.5rem;
+  color: var(--tinta-suave);
+  font-size: var(--t-sm);
+  text-decoration: none;
+}
+
+.volver:hover {
+  color: var(--marca);
+  text-decoration: underline;
+}
+
+.cuerpo {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 23rem;
+  gap: 2.5rem;
+  align-items: start;
+  margin-top: 1.5rem;
+}
+
+.pasos {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.paso h2 {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-bottom: 1rem;
+  font-size: var(--t-md);
+}
+
+.numero {
+  display: inline-grid;
+  place-items: center;
+  width: 1.5rem;
+  height: 1.5rem;
+  border: 1px solid var(--tinta);
+  border-radius: 50%;
+  font-family: var(--fuente-texto);
+  font-size: var(--t-xs);
+  font-weight: 600;
+}
+
+.ayuda {
+  margin-bottom: 1rem;
+  color: var(--tinta-suave);
+  font-size: var(--t-sm);
+}
+
+.paso .ayuda:last-child {
+  margin-bottom: 0;
+}
+
+/* ---- Direcciones ---- */
+
+.direcciones {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.5rem;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.opcion {
+  display: flex;
+  gap: 0.75rem;
+  width: 100%;
+  padding: 0.8rem 0.9rem;
+  background: var(--superficie);
+  border: 1px solid var(--linea);
+  border-radius: var(--radio);
+  cursor: pointer;
+}
+
+.opcion:hover {
+  border-color: var(--linea-fuerte);
+}
+
+.opcion input {
+  margin-top: 0.25rem;
+  accent-color: var(--marca);
+}
+
+.opcion > span {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+  font-size: var(--t-sm);
+}
+
+.elegida {
+  border-color: var(--marca);
+  box-shadow: inset 0 0 0 1px var(--marca);
+}
+
+.etiqueta {
+  color: var(--marca);
+  font-size: var(--t-xs);
+  font-weight: 600;
+}
+
+.detalle {
+  color: var(--tinta-suave);
+  font-size: var(--t-sm);
+}
+
+/* ---- Resumen ---- */
+
+.resumen {
+  position: sticky;
+  top: 5.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 1.25rem;
+  background: var(--superficie);
+  border: 1px solid var(--linea);
+  border-radius: var(--radio);
+}
+
+.reserva {
+  padding: 0.7rem 0.85rem;
+  background: var(--marca-tenue);
+  border-left: 3px solid var(--marca);
+  font-size: var(--t-sm);
+}
+
+.reserva strong {
+  font-size: var(--t-md);
+}
+
+.poca {
+  background: var(--acento-tenue);
+  border-left-color: var(--acento);
+  color: var(--acento);
+}
+
+.vencida {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.6rem;
+  background: var(--peligro-tenue);
+  border-left-color: var(--peligro);
+  color: var(--peligro);
+}
+
+.vencida strong {
+  font-size: inherit;
+}
+
+.notaReserva {
+  color: var(--tinta-suave);
+  font-size: var(--t-xs);
+}
+
+.poca .notaReserva {
+  color: inherit;
+}
+
+.lineas {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.lineas li {
+  display: grid;
+  grid-template-columns: 2.75rem minmax(0, 1fr) auto;
+  gap: 0.75rem;
+  align-items: start;
+  font-size: var(--t-sm);
+}
+
+.miniatura {
+  aspect-ratio: 1 / 1;
+}
+
+.producto {
+  font-weight: 600;
+}
+
+.montos {
+  margin: 0;
+  padding-top: 0.75rem;
+  border-top: 1px solid var(--linea);
+}
+
+.montos > div {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.25rem 0;
+  font-size: var(--t-sm);
+}
+
+.montos dt {
+  color: var(--tinta-suave);
+}
+
+.montos dd {
+  margin: 0;
+}
+
+.descuento dt,
+.descuento dd {
+  color: var(--acento);
+}
+
+.montos .total {
+  margin-top: 0.4rem;
+  padding-top: 0.6rem;
+  border-top: 1px solid var(--linea);
+  font-size: var(--t-md);
+  font-weight: 600;
+}
+
+.montos .total dt {
+  color: var(--tinta);
+}
+
+.iva {
+  margin-top: -0.6rem;
+  color: var(--tinta-tenue);
+  font-size: var(--t-xs);
+  text-align: right;
+}
+
+.errorPago {
+  padding: 0.6rem 0.75rem;
+  background: var(--peligro-tenue);
+  border-left: 3px solid var(--peligro);
+  color: var(--peligro);
+  font-size: var(--t-sm);
+}
+
+.errorPago button {
+  margin-top: 0.4rem;
+  padding: 0;
+  background: none;
+  border: 0;
+  color: var(--tinta);
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  cursor: pointer;
+}
+
+.errorPago a {
+  display: inline-block;
+  color: var(--tinta);
+  font-weight: 600;
+}
+
+.pagar {
+  width: 100%;
+  height: 2.75rem;
+  font-size: var(--t-base);
+}
+
+.entregaEn {
+  margin-top: -0.4rem;
+  color: var(--tinta-tenue);
+  font-size: var(--t-xs);
+}
+
+.accionesVacio {
+  display: flex;
+  gap: 0.5rem;
+}
+
+@media (max-width: 900px) {
+  .cuerpo {
+    grid-template-columns: 1fr;
+  }
+
+  .resumen {
+    position: static;
+  }
+}

@@ -2,7 +2,12 @@ import { createBrowserRouter, Navigate } from 'react-router';
 import { inicioSegunRol, PERSONAL } from './auth/roles';
 import { RutaProtegida } from './auth/RutaProtegida';
 import { useSesion } from './auth/sesion';
+import { LayoutCuenta } from './layouts/LayoutCuenta';
 import { LayoutPanel } from './layouts/LayoutPanel';
+import { Checkout } from './paginas/compra/Checkout';
+import { DetallePedido } from './paginas/cuenta/DetallePedido';
+import { Direcciones } from './paginas/cuenta/Direcciones';
+import { MisPedidos } from './paginas/cuenta/MisPedidos';
 import { LayoutTienda } from './layouts/LayoutTienda';
 import { Entrar } from './paginas/cuenta/Entrar';
 import { Registro } from './paginas/cuenta/Registro';
@@ -31,9 +36,17 @@ export const router = createBrowserRouter([
       {
         element: <RutaProtegida roles={['CLIENTE']} />,
         children: [
-          { path: 'checkout', element: <Pendiente titulo="Pago" /> },
-          { path: 'cuenta/pedidos', element: <Pendiente titulo="Mis pedidos" /> },
-          { path: 'cuenta/direcciones', element: <Pendiente titulo="Direcciones" /> },
+          { path: 'checkout', element: <Checkout /> },
+          {
+            path: 'cuenta',
+            element: <LayoutCuenta />,
+            children: [
+              { index: true, element: <Navigate to="pedidos" replace /> },
+              { path: 'pedidos', element: <MisPedidos /> },
+              { path: 'pedidos/:id', element: <DetallePedido /> },
+              { path: 'direcciones', element: <Direcciones /> },
+            ],
+          },
         ],
       },
       { path: '*', element: <NoEncontrada /> },

@@ -173,7 +173,9 @@ function Cupon({ carrito }: { carrito: DatosCarrito }) {
 function Resumen({ carrito }: { carrito: DatosCarrito }) {
   const { usuario } = useSesion();
   const { resumen } = carrito;
-  const bloqueado = carrito.items.some((i) => i.aviso !== null);
+  const productosConAviso = carrito.items.some((i) => i.aviso !== null);
+  const cuponInvalido = carrito.cupon !== null && !carrito.cupon.valido;
+  const bloqueado = productosConAviso || cuponInvalido;
 
   return (
     <aside className={css.resumen} aria-label="Resumen del pedido">
@@ -206,7 +208,11 @@ function Resumen({ carrito }: { carrito: DatosCarrito }) {
             <Boton disabled className={css.botonPagar}>
               Continuar con la compra
             </Boton>
-            <p className={css.notaPagar}>Revise los productos marcados antes de continuar.</p>
+            <p className={css.notaPagar}>
+              {productosConAviso
+                ? 'Revise los productos marcados antes de continuar.'
+                : 'Quite el cupón o cumpla sus condiciones para continuar.'}
+            </p>
           </>
         ) : usuario ? (
           <BotonEnlace to="/checkout" className={css.botonPagar}>
