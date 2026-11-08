@@ -1,0 +1,44 @@
+.insignia {
+  display: inline-block;
+  padding: 0.1rem 0.45rem;
+  border-radius: 2px;
+  font-size: var(--t-xs);
+  font-weight: 600;
+  line-height: 1.5;
+  white-space: nowrap;
+}
+
+.neutro {
+  background: var(--superficie-hundida);
+  color: var(--tinta-suave);
+}
+
+.marca {
+  background: var(--marca-tenue);
+  color: var(--marca);
+}
+
+.info {
+  background: var(--info-tenue);
+  color: var(--info);
+}
+
+.aviso {
+  background: var(--aviso-tenue);
+  color: var(--aviso);
+}
+
+.exito {
+  background: var(--exito-tenue);
+  color: var(--exito);
+}
+
+.peligro {
+  background: var(--peligro-tenue);
+  color: var(--peligro);
+}
+
+.acento {
+  background: var(--acento-tenue);
+  color: var(--acento);
+}

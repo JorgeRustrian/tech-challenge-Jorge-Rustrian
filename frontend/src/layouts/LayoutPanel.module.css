@@ -1,0 +1,199 @@
+.panel {
+  display: grid;
+  grid-template-columns: 15rem minmax(0, 1fr);
+  min-height: 100vh;
+}
+
+.lateral {
+  position: sticky;
+  top: 0;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  background: var(--superficie-hundida);
+  border-right: 1px solid var(--linea);
+}
+
+.marca {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+  padding: 1.1rem 1.25rem;
+  border-bottom: 1px solid var(--linea);
+}
+
+.marca a {
+  font-family: var(--fuente-titulo);
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--marca);
+  text-decoration: none;
+}
+
+.marca span {
+  color: var(--tinta-tenue);
+  font-size: var(--t-xs);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.cerrarMenu {
+  display: none;
+}
+
+.navegacion {
+  flex: 1;
+  padding: 0.75rem 0;
+  overflow-y: auto;
+}
+
+.seccion p {
+  padding: 0.75rem 1.25rem 0.3rem;
+  color: var(--tinta-tenue);
+  font-size: var(--t-xs);
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.seccion ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.seccion a {
+  display: block;
+  padding: 0.4rem 1.25rem;
+  border-left: 3px solid transparent;
+  color: var(--tinta);
+  font-size: var(--t-sm);
+  text-decoration: none;
+}
+
+.seccion a:hover {
+  background: var(--papel);
+}
+
+.seccion a[aria-current='page'] {
+  background: var(--papel);
+  border-left-color: var(--marca);
+  color: var(--marca);
+  font-weight: 600;
+}
+
+.usuario {
+  padding: 1rem 1.25rem;
+  border-top: 1px solid var(--linea);
+  font-size: var(--t-sm);
+}
+
+.nombre {
+  font-weight: 600;
+}
+
+.rol {
+  color: var(--tinta-tenue);
+  font-size: var(--t-xs);
+}
+
+.accionesUsuario {
+  display: flex;
+  gap: 1rem;
+  margin-top: 0.6rem;
+}
+
+.accionesUsuario a,
+.accionesUsuario button {
+  padding: 0;
+  background: none;
+  border: 0;
+  color: var(--tinta-suave);
+  font-size: var(--t-sm);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  cursor: pointer;
+}
+
+.principal {
+  min-width: 0;
+}
+
+.barraMovil {
+  display: none;
+}
+
+.contenido {
+  max-width: 82rem;
+  padding: 2rem 2.25rem 3rem;
+}
+
+.velo {
+  display: none;
+}
+
+@media (max-width: 900px) {
+  .panel {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .lateral {
+    position: fixed;
+    inset: 0 auto 0 0;
+    z-index: 40;
+    width: 16rem;
+    transform: translateX(-100%);
+    transition: transform 180ms ease-out;
+  }
+
+  .abierto {
+    transform: none;
+  }
+
+  .cerrarMenu {
+    display: grid;
+    place-items: center;
+    margin-left: auto;
+    padding: 0.2rem;
+    background: none;
+    border: 0;
+    color: var(--tinta-suave);
+    cursor: pointer;
+  }
+
+  .velo {
+    display: block;
+    position: fixed;
+    inset: 0;
+    z-index: 30;
+    background: rgb(31 29 26 / 0.4);
+  }
+
+  .barraMovil {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.6rem 1rem;
+    background: var(--papel);
+    border-bottom: 1px solid var(--linea);
+    font-family: var(--fuente-titulo);
+    font-weight: 600;
+  }
+
+  .barraMovil button {
+    display: grid;
+    place-items: center;
+    padding: 0.3rem;
+    background: none;
+    border: 1px solid var(--linea-fuerte);
+    border-radius: var(--radio);
+    cursor: pointer;
+  }
+
+  .contenido {
+    padding: 1.25rem 1rem 2.5rem;
+  }
+}

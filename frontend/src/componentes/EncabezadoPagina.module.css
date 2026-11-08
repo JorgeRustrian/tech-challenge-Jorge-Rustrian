@@ -1,0 +1,30 @@
+.encabezado {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.antetitulo {
+  margin-bottom: 0.25rem;
+  color: var(--tinta-suave);
+  font-size: var(--t-sm);
+}
+
+.antetitulo a {
+  color: inherit;
+}
+
+.descripcion {
+  margin-top: 0.35rem;
+  color: var(--tinta-suave);
+  font-size: var(--t-sm);
+}
+
+.acciones {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
