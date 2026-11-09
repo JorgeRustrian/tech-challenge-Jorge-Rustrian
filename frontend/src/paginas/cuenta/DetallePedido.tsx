@@ -7,117 +7,13 @@ import { useAvisos } from '../../componentes/Avisos';
 import { Boton, BotonEnlace } from '../../componentes/Boton';
 import { AreaTexto } from '../../componentes/Campos';
 import { AvisoError, Cargando, ErrorVista, Vacio } from '../../componentes/Estados';
-import { EstadoPedido, etiquetaEstadoPedido } from '../../componentes/Insignia';
+import { EstadoPedido } from '../../componentes/Insignia';
 import { Modal } from '../../componentes/Modal';
+import { DevolucionesPedido, HistorialPedido, LineasPedido, MontosPedido } from '../../componentes/pedido/PartesPedido';
 import { useTitulo } from '../../hooks/useTitulo';
-import { formatoFechaHora, formatoMoneda } from '../../utils/formato';
+import { formatoFechaHora } from '../../utils/formato';
 import { NoEncontrada } from '../NoEncontrada';
 import css from './DetallePedido.module.css';
-
-function Lineas({ pedido }: { pedido: PedidoDetalle }) {
-  return (
-    <div className={css.tablaMarco}>
-      <table className={css.tabla}>
-        <thead>
-          <tr>
-            <th scope="col">Producto</th>
-            <th scope="col" className={css.num}>
-              Cant.
-            </th>
-            <th scope="col" className={`${css.num} ${css.amplia}`}>
-              Precio
-            </th>
-            <th scope="col" className={`${css.num} ${css.amplia}`}>
-              Descuento
-            </th>
-            <th scope="col" className={css.num}>
-              Total
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          {pedido.lineas.map((l) => (
-            <tr key={l.id}>
-              <td>
-                <p className={css.producto}>{l.producto}</p>
-                <p className={css.secundario}>
-                  {[l.talla && `Talla ${l.talla}`, l.color, l.sku].filter(Boolean).join(' · ')}
-                </p>
-                {/* En pantallas angostas el precio y el descuento van aquí en lugar de en sus columnas. */}
-                <p className={`${css.secundario} ${css.angosta} cifras`}>
-                  {formatoMoneda(l.precioUnitario)} c/u{l.descuento > 0 && ` · −${formatoMoneda(l.descuento)}`}
-                </p>
-                {l.cantidadDevuelta > 0 && (
-                  <p className={css.devuelta}>
-                    {l.cantidadDevuelta === l.cantidad ? 'Devuelto' : `${l.cantidadDevuelta} de ${l.cantidad} devueltas`}
-                  </p>
-                )}
-              </td>
-              <td className={css.num}>{l.cantidad}</td>
-              <td className={`${css.num} ${css.amplia}`}>{formatoMoneda(l.precioUnitario)}</td>
-              <td className={`${css.num} ${css.amplia}`}>{l.descuento > 0 ? `−${formatoMoneda(l.descuento)}` : '—'}</td>
-              <td className={css.num}>{formatoMoneda(l.total)}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
-  );
-}
-
-function Montos({ pedido }: { pedido: PedidoDetalle }) {
-  const { montos } = pedido;
-  return (
-    <dl className={`${css.montos} cifras`}>
-      <div>
-        <dt>Subtotal</dt>
-        <dd>{formatoMoneda(montos.subtotal)}</dd>
-      </div>
-      {montos.descuento > 0 && (
-        <div className={css.descuento}>
-          <dt>Descuento{pedido.cupon && ` (${pedido.cupon})`}</dt>
-          <dd>−{formatoMoneda(montos.descuento)}</dd>
-        </div>
-      )}
-      <div>
-        <dt>Envío</dt>
-        <dd>{montos.costoEnvio > 0 ? formatoMoneda(montos.costoEnvio) : 'Gratis'}</dd>
-      </div>
-      <div className={css.total}>
-        <dt>Total pagado</dt>
-        <dd>{formatoMoneda(montos.total)}</dd>
-      </div>
-      <div className={css.iva}>
-        <dt>IVA incluido</dt>
-        <dd>{formatoMoneda(montos.ivaIncluido)}</dd>
-      </div>
-      {montos.reembolsado > 0 && (
-        <div className={css.reembolso}>
-          <dt>Reembolsado</dt>
-          <dd>{formatoMoneda(montos.reembolsado)}</dd>
-        </div>
-      )}
-    </dl>
-  );
-}
-
-function Historial({ pedido }: { pedido: PedidoDetalle }) {
-  // La API los entrega en orden; el más reciente se muestra arriba.
-  const eventos = [...pedido.historial].reverse();
-  return (
-    <ol className={css.historial}>
-      {eventos.map((h, i) => (
-        <li key={`${h.fecha}-${i}`}>
-          <p className={css.evento}>{etiquetaEstadoPedido(h.estadoNuevo)}</p>
-          <p className={`${css.secundario} cifras`}>
-            {formatoFechaHora(h.fecha)} · {h.usuario.nombre}
-          </p>
-          {h.comentario && <p className={css.comentario}>{h.comentario}</p>}
-        </li>
-      ))}
-    </ol>
-  );
-}
 
 function Cancelar({ pedido, alCerrar }: { pedido: PedidoDetalle; alCerrar: () => void }) {
   const queryClient = useQueryClient();
@@ -207,7 +103,7 @@ export function DetallePedido() {
   const cancelable = CANCELABLES_POR_CLIENTE.includes(pedido.estado.codigo);
 
   return (
-    <article className={css.pedido}>
+    <article>
       <header className={css.cabecera}>
         <div>
           <Link to="/cuenta/pedidos" className={css.volver}>
@@ -247,31 +143,19 @@ export function DetallePedido() {
         <div className={css.principal}>
           <section>
             <h2>Productos</h2>
-            <Lineas pedido={pedido} />
+            <LineasPedido pedido={pedido} />
           </section>
 
           {pedido.devoluciones.length > 0 && (
             <section>
               <h2>Devoluciones</h2>
-              <ul className={css.devoluciones}>
-                {pedido.devoluciones.map((d) => (
-                  <li key={d.id}>
-                    <p>
-                      <strong className="cifras">{formatoMoneda(d.montoReembolso)}</strong> reembolsados el{' '}
-                      <span className="cifras">{formatoFechaHora(d.fecha)}</span>
-                    </p>
-                    <p className={css.secundario}>
-                      {d.lineas.map((l) => `${l.cantidad} × ${l.sku}`).join(', ')} · Motivo: {d.motivo}
-                    </p>
-                  </li>
-                ))}
-              </ul>
+              <DevolucionesPedido pedido={pedido} />
             </section>
           )}
 
           <section>
             <h2>Seguimiento</h2>
-            <Historial pedido={pedido} />
+            <HistorialPedido pedido={pedido} vistaCliente />
           </section>
         </div>
 
@@ -284,10 +168,7 @@ export function DetallePedido() {
           </section>
           <section className={css.bloque}>
             <h2>Pago</h2>
-            <Montos pedido={pedido} />
-            {pedido.referenciaPago && (
-              <p className={`${css.referencia} cifras`}>Referencia {pedido.referenciaPago}</p>
-            )}
+            <MontosPedido pedido={pedido} />
           </section>
         </aside>
       </div>

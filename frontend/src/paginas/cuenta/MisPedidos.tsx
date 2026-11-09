@@ -1,17 +1,15 @@
-import { useState, type FormEvent } from 'react';
 import { Link } from 'react-router';
 import { numeroPedido, type PedidoResumen } from '../../api/pedidos';
 import { Boton, BotonEnlace } from '../../componentes/Boton';
 import { EncabezadoPagina } from '../../componentes/EncabezadoPagina';
-import { EstadoPedido, etiquetaEstadoPedido } from '../../componentes/Insignia';
+import { BarraFiltros, CampoSeleccion, FiltroFechas } from '../../componentes/Filtros';
+import { EstadoPedido, OPCIONES_ESTADO_PEDIDO } from '../../componentes/Insignia';
 import { Paginacion } from '../../componentes/Paginacion';
 import { Tabla, type Columna } from '../../componentes/Tabla';
 import { useListado } from '../../hooks/useListado';
 import { useTitulo } from '../../hooks/useTitulo';
 import { formatoFechaHora, formatoMoneda } from '../../utils/formato';
 import css from './MisPedidos.module.css';
-
-const ESTADOS = ['PAGADO', 'EN_PREPARACION', 'DESPACHADO', 'ENTREGADO', 'CANCELADO', 'DEVUELTO_PARCIAL', 'DEVUELTO'];
 
 const COLUMNAS: Columna<PedidoResumen>[] = [
   {
@@ -39,69 +37,6 @@ const COLUMNAS: Columna<PedidoResumen>[] = [
   },
 ];
 
-function Filtros({
-  valores,
-  alCambiar,
-}: {
-  valores: Record<string, string>;
-  alCambiar: (cambios: Record<string, string | undefined>) => void;
-}) {
-  const [desde, setDesde] = useState(valores.fechaDesde ?? '');
-  const [hasta, setHasta] = useState(valores.fechaHasta ?? '');
-  const [error, setError] = useState<string | null>(null);
-
-  function aplicarFechas(e: FormEvent) {
-    e.preventDefault();
-    if (desde && hasta && desde > hasta) {
-      setError('La fecha inicial no puede ser posterior a la final.');
-      return;
-    }
-    setError(null);
-    alCambiar({ fechaDesde: desde || undefined, fechaHasta: hasta || undefined });
-  }
-
-  return (
-    <form className={css.filtros} onSubmit={aplicarFechas} noValidate>
-      <label>
-        <span>Estado</span>
-        <select value={valores.estado ?? ''} onChange={(e) => alCambiar({ estado: e.target.value || undefined })}>
-          <option value="">Todos</option>
-          {ESTADOS.map((e) => (
-            <option key={e} value={e}>
-              {etiquetaEstadoPedido(e)}
-            </option>
-          ))}
-        </select>
-      </label>
-      <label>
-        <span>Desde</span>
-        <input type="date" value={desde} onChange={(e) => setDesde(e.target.value)} />
-      </label>
-      <label>
-        <span>Hasta</span>
-        <input type="date" value={hasta} onChange={(e) => setHasta(e.target.value)} />
-      </label>
-      <Boton type="submit" variante="secundario" chico>
-        Filtrar
-      </Boton>
-      {(valores.estado || valores.fechaDesde || valores.fechaHasta) && (
-        <Boton
-          variante="fantasma"
-          chico
-          onClick={() => {
-            setDesde('');
-            setHasta('');
-            alCambiar({ estado: undefined, fechaDesde: undefined, fechaHasta: undefined });
-          }}
-        >
-          Quitar filtros
-        </Boton>
-      )}
-      {error && <p className={css.error}>{error}</p>}
-    </form>
-  );
-}
-
 export function MisPedidos() {
   useTitulo('Mis pedidos');
   const listado = useListado<PedidoResumen>({
@@ -110,7 +45,8 @@ export function MisPedidos() {
     filtros: ['estado', 'fechaDesde', 'fechaHasta'],
     tamanio: 10,
   });
-  const hayFiltros = Object.keys(listado.filtros).length > 0;
+  const { filtros } = listado;
+  const hayFiltros = Object.keys(filtros).length > 0;
   const sinPedidos = !hayFiltros && listado.paginacion?.total === 0;
 
   return (
@@ -124,11 +60,29 @@ export function MisPedidos() {
         </div>
       ) : (
         <>
-          <Filtros
-            key={`${listado.filtros.fechaDesde}-${listado.filtros.fechaHasta}`}
-            valores={listado.filtros}
-            alCambiar={listado.cambiarFiltros}
-          />
+          <BarraFiltros>
+            <CampoSeleccion
+              etiqueta="Estado"
+              valor={filtros.estado ?? ''}
+              opciones={[{ valor: '', etiqueta: 'Todos' }, ...OPCIONES_ESTADO_PEDIDO]}
+              alCambiar={(estado) => listado.cambiarFiltros({ estado })}
+            />
+            <FiltroFechas
+              key={`${filtros.fechaDesde}-${filtros.fechaHasta}`}
+              desde={filtros.fechaDesde}
+              hasta={filtros.fechaHasta}
+              alAplicar={listado.cambiarFiltros}
+            />
+            {hayFiltros && (
+              <Boton
+                variante="fantasma"
+                chico
+                onClick={() => listado.cambiarFiltros({ estado: undefined, fechaDesde: undefined, fechaHasta: undefined })}
+              >
+                Quitar filtros
+              </Boton>
+            )}
+          </BarraFiltros>
           <Tabla
             columnas={COLUMNAS}
             filas={listado.datos}

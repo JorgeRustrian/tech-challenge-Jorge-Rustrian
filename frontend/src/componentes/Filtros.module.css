@@ -1,0 +1,71 @@
+.barra {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 0.75rem 1rem;
+  margin-bottom: 1rem;
+}
+
+.campo {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  color: var(--tinta-suave);
+  font-size: var(--t-xs);
+  font-weight: 600;
+}
+
+.campo select,
+.campo input {
+  height: 1.875rem;
+  padding: 0 0.5rem;
+  background: var(--superficie);
+  border: 1px solid var(--linea-fuerte);
+  border-radius: var(--radio);
+  color: var(--tinta);
+  font-size: var(--t-sm);
+  font-weight: 400;
+}
+
+.campo select:focus,
+.campo input:focus {
+  outline: none;
+  border-color: var(--marca);
+}
+
+.busqueda {
+  flex: 1 1 14rem;
+  max-width: 22rem;
+}
+
+.conIcono {
+  position: relative;
+  display: block;
+}
+
+.conIcono svg {
+  position: absolute;
+  top: 50%;
+  left: 0.5rem;
+  transform: translateY(-50%);
+  color: var(--tinta-tenue);
+  pointer-events: none;
+}
+
+.conIcono input {
+  width: 100%;
+  padding-left: 1.75rem;
+}
+
+.fechas {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 0.75rem;
+}
+
+.error {
+  flex-basis: 100%;
+  color: var(--peligro);
+  font-size: var(--t-sm);
+}

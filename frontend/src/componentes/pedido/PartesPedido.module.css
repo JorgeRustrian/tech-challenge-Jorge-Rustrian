@@ -1,0 +1,185 @@
+.secundario {
+  color: var(--tinta-suave);
+  font-size: var(--t-sm);
+}
+
+/* ---- Líneas ---- */
+
+.tablaMarco {
+  overflow-x: auto;
+  border: 1px solid var(--linea);
+  border-radius: var(--radio);
+  background: var(--superficie);
+}
+
+.tabla {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--t-sm);
+}
+
+.tabla th {
+  padding: 0.5rem 0.75rem;
+  background: var(--papel);
+  border-bottom: 1px solid var(--linea);
+  color: var(--tinta-suave);
+  font-size: var(--t-xs);
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-align: left;
+  text-transform: uppercase;
+}
+
+.tabla td {
+  padding: 0.65rem 0.75rem;
+  border-bottom: 1px solid var(--linea);
+  vertical-align: top;
+}
+
+.tabla tbody tr:last-child td {
+  border-bottom: 0;
+}
+
+.num {
+  text-align: right !important;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.producto {
+  font-weight: 600;
+}
+
+.devuelta {
+  margin-top: 0.2rem;
+  color: var(--acento);
+  font-size: var(--t-xs);
+  font-weight: 600;
+}
+
+.angosta {
+  display: none;
+}
+
+/* ---- Montos ---- */
+
+.montos {
+  margin: 0;
+  font-size: var(--t-sm);
+}
+
+.montos > div {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.2rem 0;
+}
+
+.montos dt {
+  color: var(--tinta-suave);
+}
+
+.montos dd {
+  margin: 0;
+}
+
+.acento dt,
+.acento dd {
+  color: var(--acento);
+}
+
+.montos .total {
+  margin-top: 0.35rem;
+  padding-top: 0.5rem;
+  border-top: 1px solid var(--linea);
+  font-size: var(--t-base);
+  font-weight: 600;
+}
+
+.montos .total dt {
+  color: var(--tinta);
+}
+
+.montos .iva {
+  color: var(--tinta-tenue);
+  font-size: var(--t-xs);
+}
+
+.montos .iva dt {
+  color: inherit;
+}
+
+.referencia {
+  margin-top: 0.75rem;
+  padding-top: 0.6rem;
+  border-top: 1px dashed var(--linea-fuerte);
+  color: var(--tinta-tenue);
+  font-size: var(--t-xs);
+  letter-spacing: 0.03em;
+}
+
+/* ---- Seguimiento ---- */
+
+.historial {
+  margin: 0;
+  padding: 0 0 0 1rem;
+  list-style: none;
+  border-left: 1px solid var(--linea-fuerte);
+}
+
+.historial li {
+  position: relative;
+  padding: 0 0 1.1rem 0.4rem;
+}
+
+.historial li::before {
+  content: '';
+  position: absolute;
+  top: 0.45rem;
+  left: -1.3rem;
+  width: 0.55rem;
+  height: 0.55rem;
+  background: var(--papel);
+  border: 1px solid var(--tinta-suave);
+  border-radius: 50%;
+}
+
+.historial li:first-child::before {
+  background: var(--marca);
+  border-color: var(--marca);
+}
+
+.historial li:last-child {
+  padding-bottom: 0;
+}
+
+.evento {
+  font-weight: 600;
+}
+
+.comentario {
+  margin-top: 0.2rem;
+  font-size: var(--t-sm);
+  font-style: italic;
+  color: var(--tinta-suave);
+}
+
+.devoluciones {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: var(--t-sm);
+}
+
+@media (max-width: 560px) {
+  .amplia {
+    display: none;
+  }
+
+  .angosta {
+    display: block;
+  }
+}

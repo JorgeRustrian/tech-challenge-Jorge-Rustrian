@@ -61,6 +61,7 @@ export async function listarPedidos(q: ListarPedidosQuery): Promise<Paginado<Ped
     estado: q.estado,
     fechaDesde: q.fechaDesde,
     fechaHasta: q.fechaHasta,
+    orden: q.orden,
     pagina: q.pagina,
     tamanio: q.tamanio,
   });

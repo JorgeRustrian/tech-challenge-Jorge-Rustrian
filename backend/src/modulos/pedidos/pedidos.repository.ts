@@ -155,6 +155,7 @@ export interface FiltrosPedidos {
   estado?: string;
   fechaDesde?: string;
   fechaHasta?: string;
+  orden?: string;
   pagina: number;
   tamanio: number;
 }
@@ -230,6 +231,9 @@ export async function listar(f: FiltrosPedidos): Promise<{ total: number; pedido
     { nombre: 'Estado', tipo: sql.VarChar(20), valor: f.estado ?? null },
     { nombre: 'FechaDesde', tipo: sql.Date, valor: f.fechaDesde ?? null },
     { nombre: 'FechaHasta', tipo: sql.Date, valor: f.fechaHasta ?? null },
+    // Solo se envía si no es el orden por defecto: así el listado sigue funcionando con una
+    // versión del SP anterior a @Orden mientras se actualiza la base de datos.
+    ...(f.orden && f.orden !== 'recientes' ? [{ nombre: 'Orden', tipo: sql.VarChar(20), valor: f.orden }] : []),
     { nombre: 'Pagina', tipo: sql.Int, valor: f.pagina },
     { nombre: 'TamanioPagina', tipo: sql.Int, valor: f.tamanio },
   ]);

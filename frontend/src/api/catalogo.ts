@@ -49,6 +49,11 @@ export function obtenerCategorias(senal?: AbortSignal): Promise<Categoria[]> {
   return solicitar<Categoria[]>('/catalogo/categorias', { senal });
 }
 
+// Incluye las categorías inactivas.
+export function obtenerCategoriasPanel(senal?: AbortSignal): Promise<Categoria[]> {
+  return solicitar<Categoria[]>('/admin/catalogo/categorias', { senal });
+}
+
 export function obtenerProducto(id: number, senal?: AbortSignal): Promise<ProductoDetalle> {
   return solicitar<ProductoDetalle>(`/catalogo/productos/${id}`, { senal });
 }

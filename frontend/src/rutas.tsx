@@ -16,6 +16,10 @@ import { Catalogo } from './paginas/tienda/Catalogo';
 import { Producto } from './paginas/tienda/Producto';
 import { ErrorRuta } from './paginas/ErrorRuta';
 import { NoEncontrada } from './paginas/NoEncontrada';
+import { Inventario } from './paginas/panel/inventario/Inventario';
+import { Kardex } from './paginas/panel/inventario/Kardex';
+import { DetallePedidoPanel } from './paginas/panel/pedidos/DetallePedidoPanel';
+import { PedidosPanel } from './paginas/panel/pedidos/PedidosPanel';
 import { Pendiente } from './paginas/Pendiente';
 
 function InicioPanel() {
@@ -61,8 +65,10 @@ export const router = createBrowserRouter([
         element: <LayoutPanel />,
         children: [
           { index: true, element: <InicioPanel /> },
-          { path: 'pedidos', element: <Pendiente titulo="Pedidos" /> },
-          { path: 'inventario', element: <Pendiente titulo="Inventario" /> },
+          { path: 'pedidos', element: <PedidosPanel /> },
+          { path: 'pedidos/:id', element: <DetallePedidoPanel /> },
+          { path: 'inventario', element: <Inventario /> },
+          { path: 'inventario/:id', element: <Kardex /> },
           { path: 'productos', element: <Pendiente titulo="Productos" /> },
           { path: 'categorias', element: <Pendiente titulo="Categorías" /> },
           {

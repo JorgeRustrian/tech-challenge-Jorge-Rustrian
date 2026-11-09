@@ -17,6 +17,8 @@ const ESTADOS_PEDIDO: Record<string, { etiqueta: string; tono: Tono }> = {
   DEVUELTO: { etiqueta: 'Devuelto', tono: 'neutro' },
 };
 
+export const OPCIONES_ESTADO_PEDIDO = Object.entries(ESTADOS_PEDIDO).map(([valor, e]) => ({ valor, etiqueta: e.etiqueta }));
+
 export function etiquetaEstadoPedido(codigo: string): string {
   return ESTADOS_PEDIDO[codigo]?.etiqueta ?? codigo;
 }

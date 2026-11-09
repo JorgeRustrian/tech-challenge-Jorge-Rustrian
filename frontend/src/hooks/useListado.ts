@@ -17,7 +17,15 @@ type Cambios = Record<string, string | number | undefined>;
 
 // Filtros, orden y página viven en la URL: se pueden compartir, sobreviven a recargar la página
 // y el botón Atrás regresa a la página anterior del listado. La API pagina, filtra y ordena.
-export function useListado<T>({ clave, ruta, filtros, tamanio = 12, ordenInicial, habilitado = true }: Opciones) {
+// R permite respuestas que traen algo más que la página (el kardex trae también la variante).
+export function useListado<T, R extends Paginado<T> = Paginado<T>>({
+  clave,
+  ruta,
+  filtros,
+  tamanio = 12,
+  ordenInicial,
+  habilitado = true,
+}: Opciones) {
   const [params, setParams] = useSearchParams();
 
   const pagina = Math.max(1, Number(params.get('pagina')) || 1);
@@ -30,8 +38,8 @@ export function useListado<T>({ clave, ruta, filtros, tamanio = 12, ordenInicial
 
   const parametros: Parametros = { ...valores, orden, pagina, tamanio };
   const consulta = useQuery({
-    queryKey: [clave, parametros],
-    queryFn: ({ signal }) => solicitar<Paginado<T>>(ruta, { parametros, senal: signal }),
+    queryKey: [clave, ruta, parametros],
+    queryFn: ({ signal }) => solicitar<R>(ruta, { parametros, senal: signal }),
     placeholderData: keepPreviousData,
     enabled: habilitado,
   });
@@ -51,6 +59,7 @@ export function useListado<T>({ clave, ruta, filtros, tamanio = 12, ordenInicial
   }
 
   return {
+    respuesta: consulta.data,
     datos: consulta.data?.datos,
     paginacion: consulta.data?.paginacion,
     cargando: consulta.isPending,

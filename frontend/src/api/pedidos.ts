@@ -75,3 +75,38 @@ export const obtenerMiPedido = (id: number, senal?: AbortSignal) =>
 
 export const cancelarMiPedido = (id: number, motivo: string | null) =>
   solicitar<PedidoDetalle>(`/pedidos/${id}/cancelar`, { metodo: 'POST', cuerpo: { motivo } });
+
+/* ---- Panel: Operador y Administrador ---- */
+
+// Mismas reglas que la tabla TransicionesEstado. Las devoluciones no van aquí: tienen su propio registro.
+export const SIGUIENTES_ESTADOS: Record<string, string[]> = {
+  PAGADO: ['EN_PREPARACION', 'CANCELADO'],
+  EN_PREPARACION: ['DESPACHADO', 'CANCELADO'],
+  DESPACHADO: ['ENTREGADO'],
+};
+
+export const ADMITEN_DEVOLUCION = ['ENTREGADO', 'DEVUELTO_PARCIAL'];
+
+export interface LineaDevolucion {
+  idPedidoDetalle: number;
+  cantidad: number;
+}
+
+export const obtenerPedidoPanel = (id: number, senal?: AbortSignal) =>
+  solicitar<PedidoDetalle>(`/admin/pedidos/${id}`, { senal });
+
+export const cambiarEstadoPedido = (id: number, estado: string, comentario: string | null) =>
+  solicitar<PedidoDetalle>(`/admin/pedidos/${id}/estado`, { metodo: 'PATCH', cuerpo: { estado, comentario } });
+
+export const registrarDevolucion = (id: number, motivo: string, lineas: LineaDevolucion[]) =>
+  solicitar<PedidoDetalle>(`/admin/pedidos/${id}/devoluciones`, { metodo: 'POST', cuerpo: { motivo, lineas } });
+
+const centavos = (n: number) => Math.round(n * 100 + 1e-6) / 100;
+
+// Mismo cálculo que el SP: lo acumulado se redondea una sola vez, así la suma de devoluciones
+// parciales de una línea da exactamente su total.
+export function reembolsoEstimado(linea: LineaPedido, cantidad: number): number {
+  if (cantidad <= 0) return 0;
+  const antes = linea.cantidadDevuelta;
+  return centavos(centavos((linea.total * (antes + cantidad)) / linea.cantidad) - centavos((linea.total * antes) / linea.cantidad));
+}
