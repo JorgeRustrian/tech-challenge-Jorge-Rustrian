@@ -34,7 +34,7 @@
   border-bottom: 0;
 }
 
-.tabla tbody tr:hover td:not(.celdaEstado) {
+.tabla tbody tr:hover td {
   background: #faf7f2;
 }
 
@@ -77,8 +77,4 @@
 .actualizando {
   opacity: 0.55;
   transition: opacity 150ms;
-}
-
-.celdaEstado {
-  padding: 0 !important;
 }

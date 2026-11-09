@@ -79,13 +79,7 @@ export function Tabla<T>({ columnas, filas, claveFila, cargando, error, alReinte
           </tr>
         </thead>
         <tbody className={actualizando ? css.actualizando : undefined}>
-          {estado ? (
-            <tr>
-              <td colSpan={columnas.length} className={css.celdaEstado}>
-                {estado}
-              </td>
-            </tr>
-          ) : (
+          {!estado &&
             filas?.map((fila) => (
               <tr key={claveFila(fila)}>
                 {columnas.map((col) => (
@@ -94,10 +88,11 @@ export function Tabla<T>({ columnas, filas, claveFila, cargando, error, alReinte
                   </td>
                 ))}
               </tr>
-            ))
-          )}
+            ))}
         </tbody>
       </table>
+      {/* Fuera de la tabla: en pantallas angostas queda centrado en lo visible, no en el ancho de todas las columnas. */}
+      {estado}
     </div>
   );
 }

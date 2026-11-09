@@ -1,5 +1,7 @@
+import { lazy, Suspense } from 'react';
 import { createBrowserRouter, Navigate } from 'react-router';
 import { inicioSegunRol, PERSONAL } from './auth/roles';
+import { Cargando } from './componentes/Estados';
 import { RutaProtegida } from './auth/RutaProtegida';
 import { useSesion } from './auth/sesion';
 import { LayoutCuenta } from './layouts/LayoutCuenta';
@@ -21,6 +23,9 @@ import { Kardex } from './paginas/panel/inventario/Kardex';
 import { DetallePedidoPanel } from './paginas/panel/pedidos/DetallePedidoPanel';
 import { PedidosPanel } from './paginas/panel/pedidos/PedidosPanel';
 import { Pendiente } from './paginas/Pendiente';
+
+// Recharts solo se descarga cuando alguien entra al dashboard.
+const Dashboard = lazy(() => import('./paginas/panel/dashboard/Dashboard').then((m) => ({ default: m.Dashboard })));
 
 function InicioPanel() {
   const { usuario } = useSesion();
@@ -74,7 +79,14 @@ export const router = createBrowserRouter([
           {
             element: <RutaProtegida roles={['ADMIN']} />,
             children: [
-              { path: 'dashboard', element: <Pendiente titulo="Dashboard" /> },
+              {
+                path: 'dashboard',
+                element: (
+                  <Suspense fallback={<Cargando texto="Cargando dashboard" />}>
+                    <Dashboard />
+                  </Suspense>
+                ),
+              },
               { path: 'cupones', element: <Pendiente titulo="Cupones" /> },
               { path: 'usuarios', element: <Pendiente titulo="Usuarios" /> },
               { path: 'bitacora', element: <Pendiente titulo="Bitácora" /> },
