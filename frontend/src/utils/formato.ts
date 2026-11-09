@@ -39,6 +39,29 @@ export function fechaLocalISO(d: Date): string {
   return new Intl.DateTimeFormat('en-CA', { timeZone: ZONA }).format(d);
 }
 
+// Valor de un <input type="datetime-local"> (AAAA-MM-DDTHH:mm) en hora de Guatemala.
+export function aFechaHoraLocal(iso: string): string {
+  const partes = Object.fromEntries(
+    new Intl.DateTimeFormat('en-CA', {
+      timeZone: ZONA,
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit',
+      hour: '2-digit',
+      minute: '2-digit',
+      hourCycle: 'h23',
+    })
+      .formatToParts(new Date(iso))
+      .map((p) => [p.type, p.value]),
+  );
+  return `${partes.year}-${partes.month}-${partes.day}T${partes.hour}:${partes.minute}`;
+}
+
+// Guatemala no cambia de horario en el año: siempre UTC−6.
+export function desdeFechaHoraLocal(valor: string): string {
+  return `${valor}:00-06:00`;
+}
+
 export function minutosSegundos(totalSegundos: number): string {
   const s = Math.max(0, Math.floor(totalSegundos));
   return `${Math.floor(s / 60)}:${String(s % 60).padStart(2, '0')}`;

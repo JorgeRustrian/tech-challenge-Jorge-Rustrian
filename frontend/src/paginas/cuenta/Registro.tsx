@@ -11,6 +11,7 @@ import { Entrada } from '../../componentes/Campos';
 import { AvisoError } from '../../componentes/Estados';
 import { useTitulo } from '../../hooks/useTitulo';
 import { erroresEnCampos } from '../../utils/formularios';
+import { passwordNueva, telefonoOpcional } from '../../utils/validaciones';
 import css from './Formulario.module.css';
 
 // Mismas reglas que valida la API, para avisar antes de enviar.
@@ -19,16 +20,8 @@ const esquema = z
     nombres: z.string().trim().min(1, 'Ingrese sus nombres').max(100, 'Máximo 100 caracteres'),
     apellidos: z.string().trim().min(1, 'Ingrese sus apellidos').max(100, 'Máximo 100 caracteres'),
     correo: z.string().trim().pipe(z.email('Ingrese un correo válido')),
-    telefono: z
-      .string()
-      .trim()
-      .regex(/^(\d{8,15})?$/, 'Solo números, entre 8 y 15 dígitos'),
-    password: z
-      .string()
-      .min(8, 'Use al menos 8 caracteres')
-      .max(72, 'Use como máximo 72 caracteres')
-      .regex(/[A-Za-z]/, 'Incluya al menos una letra')
-      .regex(/\d/, 'Incluya al menos un número'),
+    telefono: telefonoOpcional,
+    password: passwordNueva,
     confirmacion: z.string(),
   })
   .refine((d) => d.password === d.confirmacion, { message: 'Las contraseñas no coinciden', path: ['confirmacion'] });

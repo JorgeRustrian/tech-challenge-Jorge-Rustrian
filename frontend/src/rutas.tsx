@@ -18,11 +18,16 @@ import { Catalogo } from './paginas/tienda/Catalogo';
 import { Producto } from './paginas/tienda/Producto';
 import { ErrorRuta } from './paginas/ErrorRuta';
 import { NoEncontrada } from './paginas/NoEncontrada';
+import { Bitacora } from './paginas/panel/bitacora/Bitacora';
+import { Categorias } from './paginas/panel/catalogo/Categorias';
+import { EditarProducto } from './paginas/panel/catalogo/EditarProducto';
+import { Productos } from './paginas/panel/catalogo/Productos';
+import { Cupones } from './paginas/panel/cupones/Cupones';
 import { Inventario } from './paginas/panel/inventario/Inventario';
 import { Kardex } from './paginas/panel/inventario/Kardex';
 import { DetallePedidoPanel } from './paginas/panel/pedidos/DetallePedidoPanel';
 import { PedidosPanel } from './paginas/panel/pedidos/PedidosPanel';
-import { Pendiente } from './paginas/Pendiente';
+import { Usuarios } from './paginas/panel/usuarios/Usuarios';
 
 // Recharts solo se descarga cuando alguien entra al dashboard.
 const Dashboard = lazy(() => import('./paginas/panel/dashboard/Dashboard').then((m) => ({ default: m.Dashboard })));
@@ -74,11 +79,13 @@ export const router = createBrowserRouter([
           { path: 'pedidos/:id', element: <DetallePedidoPanel /> },
           { path: 'inventario', element: <Inventario /> },
           { path: 'inventario/:id', element: <Kardex /> },
-          { path: 'productos', element: <Pendiente titulo="Productos" /> },
-          { path: 'categorias', element: <Pendiente titulo="Categorías" /> },
+          { path: 'productos', element: <Productos /> },
+          { path: 'productos/:id', element: <EditarProducto /> },
+          { path: 'categorias', element: <Categorias /> },
           {
             element: <RutaProtegida roles={['ADMIN']} />,
             children: [
+              { path: 'productos/nuevo', element: <EditarProducto /> },
               {
                 path: 'dashboard',
                 element: (
@@ -87,9 +94,9 @@ export const router = createBrowserRouter([
                   </Suspense>
                 ),
               },
-              { path: 'cupones', element: <Pendiente titulo="Cupones" /> },
-              { path: 'usuarios', element: <Pendiente titulo="Usuarios" /> },
-              { path: 'bitacora', element: <Pendiente titulo="Bitácora" /> },
+              { path: 'cupones', element: <Cupones /> },
+              { path: 'usuarios', element: <Usuarios /> },
+              { path: 'bitacora', element: <Bitacora /> },
             ],
           },
           { path: '*', element: <NoEncontrada /> },

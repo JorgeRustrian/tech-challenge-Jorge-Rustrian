@@ -1,0 +1,235 @@
+/* Estilos compartidos de Cupones, Usuarios y Bitácora. */
+
+.secundario {
+  display: block;
+  color: var(--tinta-suave);
+  font-size: var(--t-sm);
+}
+
+.secundarioLinea {
+  color: var(--tinta-suave);
+  font-size: var(--t-sm);
+  font-weight: 400;
+}
+
+.tenue {
+  color: var(--tinta-tenue);
+}
+
+.fuerte {
+  display: block;
+  font-weight: 600;
+}
+
+.codigo {
+  display: block;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+}
+
+.acento {
+  display: block;
+  color: var(--acento);
+  font-weight: 600;
+}
+
+.mayusculas {
+  text-transform: uppercase;
+}
+
+.actualizando {
+  opacity: 0.55;
+  transition: opacity 150ms;
+}
+
+.accionesFila {
+  display: inline-flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.accionesFila button {
+  padding: 0.15rem 0.45rem;
+  background: none;
+  border: 1px solid var(--linea);
+  border-radius: var(--radio);
+  color: var(--tinta-suave);
+  font-size: var(--t-xs);
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.accionesFila button:hover {
+  border-color: var(--tinta-suave);
+  color: var(--tinta);
+}
+
+.accionesFila .peligro:hover {
+  border-color: var(--peligro);
+  color: var(--peligro);
+}
+
+.accionesFila a {
+  padding: 0 0.3rem;
+  font-size: var(--t-xs);
+}
+
+/* ---- Formularios ---- */
+
+.formulario {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.dosColumnas,
+.tresColumnas {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.tresColumnas {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.aviso {
+  padding: 0.6rem 0.8rem;
+  background: var(--aviso-tenue);
+  border-left: 3px solid var(--aviso);
+  font-size: var(--t-sm);
+}
+
+.dato span {
+  display: block;
+  margin-bottom: 0.35rem;
+  font-size: var(--t-sm);
+  font-weight: 600;
+}
+
+/* ---- Bitácora ---- */
+
+.registros {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  background: var(--superficie);
+  border: 1px solid var(--linea);
+  border-radius: var(--radio);
+}
+
+.registro {
+  padding: 0.6rem 0.9rem;
+  font-size: var(--t-sm);
+}
+
+.registro + .registro {
+  border-top: 1px solid var(--linea);
+}
+
+.lineaRegistro {
+  display: grid;
+  grid-template-columns: 10.5rem auto 1fr auto;
+  align-items: center;
+  gap: 0.4rem 0.75rem;
+}
+
+.fecha {
+  color: var(--tinta-suave);
+  white-space: nowrap;
+}
+
+.frase {
+  min-width: 0;
+}
+
+.modulo {
+  color: var(--tinta-tenue);
+  font-size: var(--t-xs);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.detalle {
+  margin: 0.4rem 0 0.2rem 11.25rem;
+}
+
+.detalle summary {
+  width: fit-content;
+  color: var(--marca);
+  font-size: var(--t-xs);
+  cursor: pointer;
+}
+
+.desborde {
+  overflow-x: auto;
+}
+
+.cambios {
+  width: 100%;
+  margin-top: 0.4rem;
+  border-collapse: collapse;
+  font-size: var(--t-xs);
+}
+
+.cambios th,
+.cambios td {
+  padding: 0.3rem 0.5rem;
+  border: 1px solid var(--linea);
+  text-align: left;
+  vertical-align: top;
+}
+
+.cambios thead th {
+  background: var(--papel);
+  color: var(--tinta-suave);
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.cambios tbody th {
+  width: 9rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.listaValores {
+  margin: 0;
+  padding-left: 1rem;
+}
+
+@media (max-width: 760px) {
+  .lineaRegistro {
+    grid-template-columns: auto 1fr;
+  }
+
+  .fecha {
+    grid-column: 1 / -1;
+  }
+
+  .frase {
+    grid-column: 1 / -1;
+    order: 3;
+  }
+
+  .modulo {
+    justify-self: end;
+  }
+
+  .detalle {
+    margin-left: 0;
+  }
+
+  .tresColumnas {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@media (max-width: 560px) {
+  .dosColumnas {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
