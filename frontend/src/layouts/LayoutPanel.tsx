@@ -1,7 +1,8 @@
-import { useState } from 'react';
+import { Suspense, useState } from 'react';
 import { Link, NavLink, Outlet, useNavigate } from 'react-router';
 import { ETIQUETA_ROL } from '../auth/roles';
 import { useSesion } from '../auth/sesion';
+import { Cargando } from '../componentes/Estados';
 import { IconoCerrar, IconoMenu } from '../componentes/Iconos';
 import { seccionesPara } from './menuPanel';
 import css from './LayoutPanel.module.css';
@@ -72,7 +73,10 @@ export function LayoutPanel() {
           <span>ShopCart · Panel</span>
         </header>
         <main className={css.contenido}>
-          <Outlet />
+          {/* Las páginas del panel se descargan aparte; mientras llega una, el menú sigue visible. */}
+          <Suspense fallback={<Cargando />}>
+            <Outlet />
+          </Suspense>
         </main>
       </div>
     </div>
