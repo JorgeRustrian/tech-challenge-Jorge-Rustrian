@@ -1,0 +1,199 @@
+.secundario {
+  color: var(--tinta-suave);
+  font-size: var(--t-sm);
+}
+
+.sku {
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+.sinExistencia {
+  color: var(--peligro);
+  font-weight: 600;
+}
+
+.baja {
+  color: var(--aviso);
+  font-weight: 600;
+}
+
+.accionesFila {
+  display: inline-flex;
+  gap: 0.25rem;
+}
+
+.accionesFila button {
+  padding: 0.15rem 0.45rem;
+  background: none;
+  border: 1px solid var(--linea);
+  border-radius: var(--radio);
+  color: var(--tinta-suave);
+  font-size: var(--t-xs);
+  cursor: pointer;
+}
+
+.accionesFila button:hover {
+  border-color: var(--tinta-suave);
+  color: var(--tinta);
+}
+
+/* ---- Kardex ---- */
+
+.cabecera {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1rem 2rem;
+  padding-bottom: 1rem;
+  margin-bottom: 1.25rem;
+  border-bottom: 1px solid var(--linea);
+}
+
+.volver {
+  display: inline-block;
+  margin-bottom: 0.35rem;
+  color: var(--tinta-suave);
+  font-size: var(--t-sm);
+  text-decoration: none;
+}
+
+.volver:hover {
+  color: var(--marca);
+  text-decoration: underline;
+}
+
+.resumen {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 1rem 1.5rem;
+}
+
+.botones {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.existencias {
+  display: flex;
+  margin: 0;
+  border: 1px solid var(--linea);
+  border-radius: var(--radio);
+  background: var(--superficie);
+}
+
+.existencias > div {
+  padding: 0.4rem 0.9rem;
+}
+
+.existencias > div + div {
+  border-left: 1px solid var(--linea);
+}
+
+.existencias dt {
+  color: var(--tinta-tenue);
+  font-size: var(--t-xs);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.existencias dd {
+  margin: 0;
+  font-size: var(--t-md);
+  font-weight: 600;
+}
+
+.suma {
+  color: var(--exito);
+  font-weight: 600;
+}
+
+.resta {
+  color: var(--peligro);
+  font-weight: 600;
+}
+
+.saldo {
+  white-space: nowrap;
+  color: var(--tinta-suave);
+}
+
+.saldo strong {
+  color: var(--tinta);
+}
+
+/* ---- Modales ---- */
+
+.formulario {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  font-size: var(--t-sm);
+}
+
+.sentido {
+  display: flex;
+  gap: 1.25rem;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.sentido legend {
+  margin-bottom: 0.4rem;
+  padding: 0;
+  font-weight: 600;
+}
+
+.sentido label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  cursor: pointer;
+}
+
+.sentido input {
+  accent-color: var(--marca);
+}
+
+.cuadra {
+  padding: 0.75rem 0.9rem;
+  background: var(--exito-tenue);
+  border-left: 3px solid var(--exito);
+  font-size: var(--t-sm);
+}
+
+.descuadre {
+  margin-bottom: 1rem;
+  padding: 0.75rem 0.9rem;
+  background: var(--peligro-tenue);
+  border-left: 3px solid var(--peligro);
+  color: var(--peligro);
+  font-size: var(--t-sm);
+}
+
+.tablaSimple {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--t-sm);
+}
+
+.tablaSimple th,
+.tablaSimple td {
+  padding: 0.4rem 0.5rem;
+  border-bottom: 1px solid var(--linea);
+  text-align: left;
+}
+
+.tablaSimple th {
+  color: var(--tinta-suave);
+  font-size: var(--t-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.num {
+  text-align: right !important;
+}

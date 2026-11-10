@@ -1,0 +1,200 @@
+.pestanas {
+  display: flex;
+  gap: 0.25rem;
+  margin-bottom: 1rem;
+  overflow-x: auto;
+  border-bottom: 1px solid var(--linea);
+}
+
+.pestanas button {
+  flex-shrink: 0;
+  padding: 0.45rem 0.7rem;
+  margin-bottom: -1px;
+  background: none;
+  border: 0;
+  border-bottom: 2px solid transparent;
+  color: var(--tinta-suave);
+  font-size: var(--t-sm);
+  cursor: pointer;
+}
+
+.pestanas button:hover {
+  color: var(--tinta);
+}
+
+.pestanas button[aria-pressed='true'] {
+  border-bottom-color: var(--marca);
+  color: var(--marca);
+  font-weight: 600;
+}
+
+.numero {
+  font-weight: 600;
+}
+
+.cliente {
+  display: block;
+}
+
+.correo {
+  display: block;
+  color: var(--tinta-tenue);
+  font-size: var(--t-xs);
+}
+
+/* ---- Detalle ---- */
+
+.cabecera {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1rem;
+  padding-bottom: 1rem;
+  margin-bottom: 1.25rem;
+  border-bottom: 1px solid var(--linea);
+}
+
+.volver {
+  display: inline-block;
+  margin-bottom: 0.35rem;
+  color: var(--tinta-suave);
+  font-size: var(--t-sm);
+  text-decoration: none;
+}
+
+.volver:hover {
+  color: var(--marca);
+  text-decoration: underline;
+}
+
+.titulo {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.secundario {
+  color: var(--tinta-suave);
+  font-size: var(--t-sm);
+}
+
+.acciones {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.cuerpo {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 19rem;
+  gap: 2rem;
+  align-items: start;
+}
+
+.principal {
+  display: flex;
+  flex-direction: column;
+  gap: 1.75rem;
+}
+
+.principal h2,
+.bloque h2 {
+  margin-bottom: 0.6rem;
+  font-family: var(--fuente-texto);
+  font-size: var(--t-xs);
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--tinta-suave);
+}
+
+.lateral {
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+}
+
+.bloque {
+  padding: 0.9rem 1rem;
+  background: var(--superficie);
+  border: 1px solid var(--linea);
+  border-radius: var(--radio);
+  font-size: var(--t-sm);
+}
+
+/* ---- Formularios de los modales ---- */
+
+.formulario {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  font-size: var(--t-sm);
+}
+
+.tablaDevolucion {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--t-sm);
+}
+
+.tablaDevolucion th {
+  padding: 0.4rem 0.5rem;
+  border-bottom: 1px solid var(--linea);
+  color: var(--tinta-suave);
+  font-size: var(--t-xs);
+  font-weight: 600;
+  text-align: left;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.tablaDevolucion td {
+  padding: 0.5rem;
+  border-bottom: 1px solid var(--linea);
+  vertical-align: middle;
+}
+
+.tablaDevolucion .num {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.tablaDevolucion input {
+  width: 4.5rem;
+  height: 1.875rem;
+  padding: 0 0.4rem;
+  background: var(--superficie);
+  border: 1px solid var(--linea-fuerte);
+  border-radius: var(--radio);
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+.tablaDevolucion input:focus {
+  outline: none;
+  border-color: var(--marca);
+}
+
+.tablaDevolucion tfoot td {
+  border-bottom: 0;
+  font-weight: 600;
+}
+
+.agotada {
+  color: var(--tinta-tenue);
+}
+
+.error {
+  padding: 0.6rem 0.8rem;
+  background: var(--peligro-tenue);
+  border-left: 3px solid var(--peligro);
+  color: var(--peligro);
+}
+
+@media (max-width: 1000px) {
+  .cuerpo {
+    grid-template-columns: 1fr;
+  }
+}

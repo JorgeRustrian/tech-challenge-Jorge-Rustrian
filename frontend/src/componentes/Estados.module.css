@@ -1,0 +1,44 @@
+.estado {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 3rem 1rem;
+  text-align: center;
+  color: var(--tinta-suave);
+  font-size: var(--t-sm);
+}
+
+.titulo {
+  font-family: var(--fuente-titulo);
+  font-size: var(--t-md);
+  font-weight: 600;
+  color: var(--tinta);
+}
+
+.error .titulo {
+  color: var(--peligro);
+}
+
+.giro {
+  width: 1.25rem;
+  height: 1.25rem;
+  border: 2px solid var(--linea-fuerte);
+  border-top-color: var(--marca);
+  border-radius: 50%;
+  animation: girar 800ms linear infinite;
+}
+
+.avisoError {
+  padding: 0.6rem 0.8rem;
+  background: var(--peligro-tenue);
+  border-left: 3px solid var(--peligro);
+  color: var(--peligro);
+  font-size: var(--t-sm);
+}
+
+@keyframes girar {
+  to {
+    transform: rotate(360deg);
+  }
+}

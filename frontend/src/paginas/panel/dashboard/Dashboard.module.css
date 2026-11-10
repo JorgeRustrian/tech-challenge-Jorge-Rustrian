@@ -1,0 +1,344 @@
+.secundario {
+  display: block;
+  color: var(--tinta-suave);
+  font-size: var(--t-sm);
+}
+
+.oculto {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.actualizando {
+  opacity: 0.55;
+  transition: opacity 150ms;
+}
+
+/* ---- Filtros ---- */
+
+.campoSegmentos {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  color: var(--tinta-suave);
+  font-size: var(--t-xs);
+  font-weight: 600;
+}
+
+.segmentos {
+  display: inline-flex;
+  border: 1px solid var(--linea-fuerte);
+  border-radius: var(--radio);
+  background: var(--superficie);
+}
+
+/* Con el borde del grupo queda a la misma altura que los campos de fecha. */
+.segmentos button {
+  height: calc(1.875rem - 2px);
+  padding: 0 0.65rem;
+  background: none;
+  border: 0;
+  color: var(--tinta-suave);
+  font-size: var(--t-sm);
+  font-weight: 400;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.segmentos button + button {
+  border-left: 1px solid var(--linea);
+}
+
+.segmentos button:hover {
+  color: var(--tinta);
+}
+
+.segmentos button[aria-pressed='true'] {
+  background: var(--marca);
+  color: var(--superficie);
+  font-weight: 600;
+}
+
+.casilla {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  height: 1.875rem;
+  font-size: var(--t-sm);
+  cursor: pointer;
+}
+
+.casilla input {
+  accent-color: var(--marca);
+}
+
+/* ---- Indicadores ---- */
+
+.resumen {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  margin: 0 0 1.25rem;
+  background: var(--superficie);
+  border: 1px solid var(--linea);
+  border-radius: var(--radio);
+}
+
+.resumen > div {
+  padding: 0.75rem 1rem;
+  border-top: 1px solid var(--linea);
+  border-left: 1px solid var(--linea);
+  min-width: 0;
+}
+
+/* Ventas netas ocupa la primera columna en dos filas; las otras seis van en 3 × 2. */
+.resumen > div:nth-child(-n + 4) {
+  border-top: 0;
+}
+
+.resumen > .destacado {
+  border-left: 0;
+}
+
+.destacado {
+  grid-row: span 2;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.resumen dt {
+  color: var(--tinta-suave);
+  font-size: var(--t-xs);
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.resumen dd {
+  margin: 0;
+}
+
+.valor {
+  margin-top: 0.15rem !important;
+  font-size: var(--t-lg);
+  font-weight: 600;
+  line-height: 1.2;
+  overflow-wrap: anywhere;
+}
+
+.destacado .valor {
+  font-size: 3rem;
+  letter-spacing: -0.02em;
+}
+
+.nota {
+  color: var(--tinta-tenue);
+  font-size: var(--t-xs);
+}
+
+.nota a {
+  color: inherit;
+}
+
+.alerta {
+  color: var(--acento);
+}
+
+.resumenEstado {
+  margin-bottom: 1.25rem;
+  background: var(--superficie);
+  border: 1px solid var(--linea);
+  border-radius: var(--radio);
+}
+
+/* ---- Tarjetas ---- */
+
+.rejilla {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.25rem;
+}
+
+.completa {
+  grid-column: 1 / -1;
+}
+
+.tarjeta {
+  min-width: 0;
+  padding: 1rem 1.1rem;
+  background: var(--superficie);
+  border: 1px solid var(--linea);
+  border-radius: var(--radio);
+}
+
+.cabeceraTarjeta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 0.75rem 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.cabeceraTarjeta h2 {
+  font-size: var(--t-md);
+}
+
+.cabeceraTarjeta .secundario {
+  margin-top: 0.2rem;
+}
+
+.controles {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.enlace {
+  padding: 0;
+  background: none;
+  border: 0;
+  color: var(--marca);
+  font-size: var(--t-sm);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  cursor: pointer;
+}
+
+/* ---- Gráfica ---- */
+
+.grafica {
+  font-variant-numeric: tabular-nums;
+}
+
+.grafica :focus {
+  outline: none;
+}
+
+.globo {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+  padding: 0.5rem 0.7rem;
+  background: var(--superficie);
+  border: 1px solid var(--linea-fuerte);
+  border-radius: var(--radio);
+  color: var(--tinta-suave);
+  font-size: var(--t-xs);
+}
+
+.globo strong {
+  color: var(--tinta);
+  font-size: var(--t-base);
+}
+
+/* ---- Tablas ---- */
+
+.desborde {
+  overflow-x: auto;
+}
+
+.tabla {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--t-sm);
+}
+
+.tabla th,
+.tabla td {
+  padding: 0.45rem 0.5rem;
+  border-bottom: 1px solid var(--linea);
+  text-align: left;
+  vertical-align: middle;
+}
+
+.tabla th {
+  color: var(--tinta-suave);
+  font-size: var(--t-xs);
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.tabla tbody tr:last-child td {
+  border-bottom: 0;
+}
+
+.num {
+  text-align: right !important;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.cero td {
+  color: var(--tinta-tenue);
+}
+
+.puesto {
+  width: 1.5rem;
+  color: var(--tinta-tenue);
+}
+
+.bloqueTexto {
+  display: block;
+}
+
+.columnaBarra {
+  width: 30%;
+  min-width: 4rem;
+}
+
+.barra {
+  display: block;
+  height: 8px;
+  background: var(--marca);
+  border-radius: 0 4px 4px 0;
+}
+
+.totalCarritos {
+  margin-bottom: 0.75rem;
+  font-size: var(--t-sm);
+}
+
+/* ---- Pantallas angostas ---- */
+
+@media (max-width: 1000px) {
+  .rejilla {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@media (max-width: 760px) {
+  .resumen {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .resumen > div {
+    border-top: 1px solid var(--linea) !important;
+    border-left: 1px solid var(--linea) !important;
+  }
+
+  .resumen > .destacado {
+    grid-column: 1 / -1;
+    grid-row: auto;
+    border-top: 0 !important;
+    border-left: 0 !important;
+  }
+
+  .resumen > div:nth-child(2n) {
+    border-left: 0 !important;
+  }
+
+  .destacado .valor {
+    font-size: 2.25rem;
+  }
+
+  .columnaBarra {
+    display: none;
+  }
+}

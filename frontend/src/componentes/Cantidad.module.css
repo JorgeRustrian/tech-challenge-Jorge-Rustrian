@@ -1,0 +1,44 @@
+.cantidad {
+  display: inline-flex;
+  height: var(--alto-control);
+  background: var(--superficie);
+  border: 1px solid var(--linea-fuerte);
+  border-radius: var(--radio);
+}
+
+.cantidad button {
+  width: 2.1rem;
+  background: none;
+  border: 0;
+  color: var(--tinta-suave);
+  font-size: 1.05rem;
+  cursor: pointer;
+}
+
+.cantidad button:hover:not(:disabled) {
+  background: var(--superficie-hundida);
+  color: var(--tinta);
+}
+
+.cantidad button:disabled {
+  color: var(--linea-fuerte);
+  cursor: not-allowed;
+}
+
+.cantidad input {
+  width: 2.75rem;
+  border: 0;
+  border-inline: 1px solid var(--linea);
+  background: none;
+  text-align: center;
+  font-weight: 600;
+}
+
+.cantidad input:focus {
+  outline: none;
+  background: var(--marca-tenue);
+}
+
+.cantidad input:disabled {
+  color: var(--tinta-tenue);
+}

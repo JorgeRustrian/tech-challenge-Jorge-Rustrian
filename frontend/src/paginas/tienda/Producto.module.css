@@ -1,0 +1,259 @@
+.migas {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+  margin-bottom: 1.25rem;
+  color: var(--tinta-tenue);
+  font-size: var(--t-sm);
+}
+
+.migas a {
+  color: var(--tinta-suave);
+  text-decoration: none;
+}
+
+.migas a:hover {
+  color: var(--marca);
+  text-decoration: underline;
+}
+
+.migas [aria-current] {
+  color: var(--tinta);
+}
+
+.producto {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+  gap: 3rem;
+  align-items: start;
+}
+
+/* ---- Galería ---- */
+
+.galeria {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.principal {
+  aspect-ratio: 1 / 1;
+}
+
+.miniaturas {
+  display: flex;
+  gap: 0.6rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.miniaturas button {
+  width: 4.5rem;
+  padding: 0;
+  background: none;
+  border: 1px solid transparent;
+  border-radius: var(--radio);
+  cursor: pointer;
+}
+
+.miniaturas button[aria-current='true'] {
+  border-color: var(--tinta);
+}
+
+.miniaturas button > div {
+  aspect-ratio: 1 / 1;
+  border: 0;
+}
+
+/* ---- Ficha ---- */
+
+.ficha {
+  display: flex;
+  flex-direction: column;
+  position: sticky;
+  top: 5.5rem;
+}
+
+.categoria {
+  margin-bottom: 0.4rem;
+  color: var(--tinta-tenue);
+  font-size: var(--t-xs);
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.precio {
+  display: flex;
+  align-items: baseline;
+  gap: 0.6rem;
+  margin-top: 0.75rem;
+  padding-bottom: 1.25rem;
+  border-bottom: 1px solid var(--linea);
+  font-size: var(--t-lg);
+  font-weight: 600;
+}
+
+.iva {
+  color: var(--tinta-tenue);
+  font-size: var(--t-xs);
+  font-weight: 400;
+}
+
+.selectores {
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+  padding: 1.25rem 0;
+}
+
+.selector {
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.selector legend {
+  margin-bottom: 0.5rem;
+  padding: 0;
+  font-size: var(--t-sm);
+  font-weight: 600;
+}
+
+.selector legend span {
+  color: var(--tinta-suave);
+  font-weight: 400;
+}
+
+.opciones {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+}
+
+.opciones button {
+  min-width: 2.75rem;
+  height: 2.375rem;
+  padding: 0 0.75rem;
+  background: var(--superficie);
+  border: 1px solid var(--linea-fuerte);
+  border-radius: var(--radio);
+  font-size: var(--t-sm);
+  cursor: pointer;
+}
+
+.opciones button:hover {
+  border-color: var(--tinta);
+}
+
+.opciones button[aria-pressed='true'] {
+  background: var(--tinta);
+  border-color: var(--tinta);
+  color: var(--papel);
+}
+
+.opciones .agotada {
+  color: var(--tinta-tenue);
+  text-decoration: line-through;
+}
+
+.opciones .inexistente {
+  border-style: dashed;
+  color: var(--tinta-tenue);
+}
+
+.compra {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  padding-top: 0.25rem;
+}
+
+.disponibilidad {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem 1rem;
+  font-size: var(--t-sm);
+}
+
+.hay {
+  color: var(--exito);
+}
+
+.pocas {
+  color: var(--acento);
+  font-weight: 600;
+}
+
+.sinExistencia {
+  color: var(--peligro);
+  font-weight: 600;
+}
+
+.enCarrito {
+  color: var(--tinta-suave);
+}
+
+.accionesCompra {
+  display: flex;
+  gap: 0.6rem;
+}
+
+.agregar {
+  flex: 1;
+}
+
+.confirmacion {
+  padding: 0.6rem 0.8rem;
+  background: var(--exito-tenue);
+  border-left: 3px solid var(--exito);
+  font-size: var(--t-sm);
+}
+
+.nota {
+  color: var(--tinta-suave);
+  font-size: var(--t-sm);
+}
+
+.notaPersonal {
+  padding: 0.7rem 0.85rem;
+  background: var(--info-tenue);
+  border-left: 3px solid var(--info);
+  color: var(--info);
+  font-size: var(--t-sm);
+}
+
+.sku {
+  margin-top: 1rem;
+  color: var(--tinta-tenue);
+  font-size: var(--t-xs);
+  letter-spacing: 0.04em;
+}
+
+.descripcion {
+  margin-top: 1.5rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--linea);
+}
+
+.descripcion h2 {
+  margin-bottom: 0.5rem;
+  font-size: var(--t-md);
+}
+
+.descripcion p {
+  color: var(--tinta-suave);
+  white-space: pre-line;
+}
+
+@media (max-width: 860px) {
+  .producto {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .ficha {
+    position: static;
+  }
+}

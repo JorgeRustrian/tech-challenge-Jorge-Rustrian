@@ -1,0 +1,22 @@
+.ver {
+  font-size: var(--t-sm);
+  white-space: nowrap;
+}
+
+.vacio {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 3rem 1rem;
+  color: var(--tinta-suave);
+  font-size: var(--t-sm);
+  text-align: center;
+}
+
+.vacioTitulo {
+  font-family: var(--fuente-titulo);
+  font-size: var(--t-md);
+  font-weight: 600;
+  color: var(--tinta);
+}

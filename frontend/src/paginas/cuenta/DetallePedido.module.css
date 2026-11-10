@@ -1,0 +1,92 @@
+.cabecera {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1rem;
+  padding-bottom: 1.25rem;
+  border-bottom: 1px solid var(--linea);
+}
+
+.volver {
+  display: inline-block;
+  margin-bottom: 0.4rem;
+  color: var(--tinta-suave);
+  font-size: var(--t-sm);
+  text-decoration: none;
+}
+
+.volver:hover {
+  color: var(--marca);
+  text-decoration: underline;
+}
+
+.secundario {
+  color: var(--tinta-suave);
+  font-size: var(--t-sm);
+}
+
+.estadoAcciones {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.confirmado {
+  margin-top: 1.25rem;
+  padding: 0.75rem 0.9rem;
+  background: var(--exito-tenue);
+  border-left: 3px solid var(--exito);
+  font-size: var(--t-sm);
+}
+
+.cuerpo {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 20rem;
+  gap: 2.5rem;
+  align-items: start;
+  margin-top: 1.5rem;
+}
+
+.principal {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.principal h2,
+.bloque h2 {
+  margin-bottom: 0.75rem;
+  font-size: var(--t-md);
+}
+
+.lateral {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.bloque {
+  padding: 1.1rem 1.2rem;
+  background: var(--superficie);
+  border: 1px solid var(--linea);
+  border-radius: var(--radio);
+  font-size: var(--t-sm);
+}
+
+.formCancelar {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  font-size: var(--t-sm);
+}
+
+@media (max-width: 900px) {
+  .cuerpo {
+    grid-template-columns: 1fr;
+  }
+
+  .lateral {
+    order: -1;
+  }
+}

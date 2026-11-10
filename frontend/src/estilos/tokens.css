@@ -1,0 +1,40 @@
+:root {
+  --papel: #f6f3ee;
+  --superficie: #fffdf9;
+  --superficie-hundida: #efebe4;
+  --tinta: #1f1d1a;
+  --tinta-suave: #57524b;
+  --tinta-tenue: #8a847b;
+  --linea: #ddd6cb;
+  --linea-fuerte: #bfb5a7;
+
+  --marca: #1f4d3a;
+  --marca-oscura: #163a2b;
+  --marca-tenue: #e2ebe4;
+  --acento: #b5532e;
+  --acento-tenue: #f4e2d8;
+
+  --peligro: #9e3427;
+  --peligro-tenue: #f5e0dc;
+  --aviso: #85661c;
+  --aviso-tenue: #f3ead2;
+  --exito: #2e6943;
+  --exito-tenue: #e1eee4;
+  --info: #35577a;
+  --info-tenue: #e1e8ef;
+
+  --fuente-titulo: 'Fraunces Variable', Georgia, 'Times New Roman', serif;
+  --fuente-texto: 'IBM Plex Sans', 'Segoe UI', system-ui, sans-serif;
+
+  --t-xs: 0.75rem;
+  --t-sm: 0.8125rem;
+  --t-base: 0.9375rem;
+  --t-md: 1.0625rem;
+  --t-lg: 1.375rem;
+  --t-xl: 1.875rem;
+  --t-2xl: 2.5rem;
+
+  --radio: 3px;
+  --alto-control: 2.375rem;
+  --ancho-contenido: 76rem;
+}

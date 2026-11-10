@@ -76,14 +76,31 @@ FROM
 INNER JOIN dbo.Categorias c ON c.Nombre = p.Categoria;
 GO
 
+-- Fotos de Unsplash (licencia libre). La dirección pide un recorte cuadrado de 800 px.
 INSERT INTO dbo.ProductoImagenes (IDProducto, Url, Orden)
-SELECT IDProducto, CONCAT('https://picsum.photos/seed/shopcart-', IDProducto, '/600/600'), 1
-FROM dbo.Productos;
-
-INSERT INTO dbo.ProductoImagenes (IDProducto, Url, Orden)
-SELECT IDProducto, CONCAT('https://picsum.photos/seed/shopcart-', IDProducto, '-b/600/600'), 2
-FROM dbo.Productos
-WHERE Nombre IN (N'Camisa Polo Clásica', N'Tenis Urbanos', N'Mochila Urbana 20L');
+SELECT p.IDProducto, CONCAT('https://images.unsplash.com/photo-', i.Foto, '?auto=format&fit=crop&w=800&h=800&q=80'), i.Orden
+FROM
+(
+    VALUES
+        (N'Camisa Polo Clásica',       '1623658580851-3b25bf83b4ea', 1),
+        (N'Camisa Polo Clásica',       '1671438118097-479e63198629', 2),
+        (N'Camisa Oxford Manga Larga', '1598032895397-b9472444bf93', 1),
+        (N'Playera Básica Algodón',    '1581655353564-df123a1eb820', 1),
+        (N'Camisa Hawaiana',           '1744298975062-7b1f1939f652', 1),
+        (N'Jeans Slim Fit',            '1714143136372-ddaf8b606da7', 1),
+        (N'Pantalón Chino',            '1473966968600-fa801b869a1a', 1),
+        (N'Tenis Urbanos',             '1676379760823-ebf91f45de0b', 1),
+        (N'Tenis Urbanos',             '1641997465126-c73cc4070337', 2),
+        (N'Botas de Cuero',            '1608256246200-53e635b5b65f', 1),
+        (N'Gorra Bordada',             '1560774358-d727658f457c',    1),
+        (N'Cinturón de Cuero',         '1711443982852-b3df5c563448', 1),
+        (N'Mochila Urbana 20L',        '1553062407-98eeb64c6a62',    1),
+        (N'Mochila Urbana 20L',        '1581605405669-fcdf81165afa', 2),
+        (N'Playera Deportiva Dry',     '1600679472183-07cc4f68b140', 1),
+        (N'Short Deportivo',           '1789110519851-2c2ceaa1bc6e', 1),
+        (N'Balón de Fútbol No. 5',     '1575361204480-aadea25e6e68', 1)
+) i (Producto, Foto, Orden)
+INNER JOIN dbo.Productos p ON p.Nombre = i.Producto;
 GO
 
 -- Existencias en 1 y 0 a propósito para probar la última unidad y productos agotados.

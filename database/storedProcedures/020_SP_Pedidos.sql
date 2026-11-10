@@ -125,12 +125,14 @@ GO
 
 -- @IDCliente: el cliente que consulta sus pedidos, o el filtro por cliente del Operador.
 -- @TextoCliente busca en nombre y correo. Las fechas son días calendario de Guatemala.
+-- @Orden: recientes, antiguos, total_desc o total_asc.
 CREATE OR ALTER PROCEDURE dbo.SP_Pedidos_Listar
     @IDCliente      INT = NULL,
     @TextoCliente   NVARCHAR(100) = NULL,
     @Estado         VARCHAR(20) = NULL,
     @FechaDesde     DATE = NULL,
     @FechaHasta     DATE = NULL,
+    @Orden          VARCHAR(20) = 'recientes',
     @Pagina         INT = 1,
     @TamanioPagina  INT = 20
 AS
@@ -139,6 +141,9 @@ BEGIN
 
     IF @Pagina < 1 OR @TamanioPagina NOT BETWEEN 1 AND 100
         THROW 50400, 'Parametros de paginacion invalidos.', 1;
+
+    IF @Orden NOT IN ('recientes', 'antiguos', 'total_desc', 'total_asc')
+        THROW 50400, 'Orden invalido.', 1;
 
     DECLARE @DesdeUtc DATETIME2(3) =
         CAST(CAST(@FechaDesde AS DATETIME2(3)) AT TIME ZONE 'Central America Standard Time' AT TIME ZONE 'UTC' AS DATETIME2(3));
@@ -169,7 +174,13 @@ BEGIN
     SELECT
         IDPedido, FechaCreacion, Estado, EstadoNombre, IDUsuario, Nombres, Apellidos, Correo, Total, CantidadArticulos
     FROM #Resultado
-    ORDER BY FechaCreacion DESC, IDPedido DESC
+    ORDER BY
+        CASE WHEN @Orden = 'total_desc' THEN Total END DESC,
+        CASE WHEN @Orden = 'total_asc' THEN Total END ASC,
+        CASE WHEN @Orden = 'antiguos' THEN FechaCreacion END ASC,
+        CASE WHEN @Orden = 'antiguos' THEN IDPedido END ASC,
+        FechaCreacion DESC,
+        IDPedido DESC
     OFFSET (@Pagina - 1) * @TamanioPagina ROWS
     FETCH NEXT @TamanioPagina ROWS ONLY;
 END

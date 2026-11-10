@@ -1,0 +1,67 @@
+.modal {
+  width: min(32rem, calc(100vw - 2rem));
+  max-height: calc(100vh - 4rem);
+  padding: 0;
+  background: var(--superficie);
+  border: 1px solid var(--linea-fuerte);
+  border-radius: var(--radio);
+  color: var(--tinta);
+}
+
+.amplio {
+  width: min(48rem, calc(100vw - 2rem));
+}
+
+.modal::backdrop {
+  background: rgb(31 29 26 / 0.45);
+}
+
+.contenido {
+  display: flex;
+  flex-direction: column;
+  max-height: calc(100vh - 4rem);
+}
+
+.cabecera {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1rem 1.25rem;
+  border-bottom: 1px solid var(--linea);
+}
+
+.cabecera h2 {
+  font-size: var(--t-md);
+}
+
+.cerrar {
+  display: grid;
+  place-items: center;
+  width: 2rem;
+  height: 2rem;
+  padding: 0;
+  background: none;
+  border: 0;
+  border-radius: var(--radio);
+  color: var(--tinta-suave);
+  cursor: pointer;
+}
+
+.cerrar:hover {
+  background: var(--superficie-hundida);
+}
+
+.cuerpo {
+  padding: 1.25rem;
+  overflow-y: auto;
+}
+
+.pie {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5rem;
+  padding: 0.875rem 1.25rem;
+  background: var(--papel);
+  border-top: 1px solid var(--linea);
+}

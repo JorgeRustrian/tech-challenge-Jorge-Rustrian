@@ -1,0 +1,80 @@
+.campo {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  min-width: 0;
+}
+
+.etiqueta {
+  font-size: var(--t-sm);
+  font-weight: 600;
+}
+
+.control {
+  width: 100%;
+  height: var(--alto-control);
+  padding: 0 0.7rem;
+  background: var(--superficie);
+  border: 1px solid var(--linea-fuerte);
+  border-radius: var(--radio);
+  font-size: var(--t-base);
+}
+
+.control:hover {
+  border-color: var(--tinta-tenue);
+}
+
+.control:focus {
+  outline: none;
+  border-color: var(--marca);
+  box-shadow: 0 0 0 1px var(--marca);
+}
+
+.control[aria-invalid='true'] {
+  border-color: var(--peligro);
+}
+
+.control:disabled {
+  background: var(--superficie-hundida);
+  color: var(--tinta-tenue);
+}
+
+textarea.control {
+  height: auto;
+  min-height: 5.5rem;
+  padding: 0.5rem 0.7rem;
+  resize: vertical;
+}
+
+select.control {
+  appearance: none;
+  padding-right: 2rem;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%2357524b' stroke-width='2.2'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0.7rem center;
+}
+
+.error {
+  font-size: var(--t-xs);
+  color: var(--peligro);
+}
+
+.ayuda {
+  font-size: var(--t-xs);
+  color: var(--tinta-tenue);
+}
+
+.casilla {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: var(--t-sm);
+  cursor: pointer;
+}
+
+.casilla input {
+  width: 1rem;
+  height: 1rem;
+  margin: 0;
+  accent-color: var(--marca);
+}

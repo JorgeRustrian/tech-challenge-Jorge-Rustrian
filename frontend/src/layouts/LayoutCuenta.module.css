@@ -1,0 +1,25 @@
+.pestanas {
+  display: flex;
+  gap: 1.5rem;
+  margin-bottom: 1.75rem;
+  border-bottom: 1px solid var(--linea);
+}
+
+.pestanas a {
+  padding: 0.5rem 0;
+  margin-bottom: -1px;
+  border-bottom: 2px solid transparent;
+  color: var(--tinta-suave);
+  font-size: var(--t-sm);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.pestanas a:hover {
+  color: var(--tinta);
+}
+
+.pestanas a[aria-current='page'] {
+  border-bottom-color: var(--marca);
+  color: var(--marca);
+}

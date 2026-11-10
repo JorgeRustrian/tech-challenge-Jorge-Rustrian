@@ -9,7 +9,7 @@ Tech Challenge 360 — Grupo Pentandra.
 | Fase | Contenido | Estado |
 |---|---|---|
 | 1 | Base de datos y backend | Completa |
-| 2 | Frontend y proyecto completo | Pendiente |
+| 2 | Frontend y proyecto completo | Completa |
 
 ## Stack
 
@@ -20,6 +20,11 @@ Tech Challenge 360 — Grupo Pentandra.
 | Acceso a datos | `mssql`, únicamente stored procedures con parámetros tipados |
 | Validación | Zod |
 | Autenticación | JWT (access token) + refresh token con rotación, contraseñas con bcrypt |
+| Frontend | React 19, TypeScript (strict), Vite 8, React Router 7 |
+| Datos en el cliente | TanStack Query 5 |
+| Formularios | React Hook Form + Zod |
+| Gráficas | Recharts (solo se descarga en el dashboard) |
+| Estilos | CSS Modules con variables de diseño, sin librería de componentes |
 
 ## Estructura
 
@@ -29,13 +34,32 @@ techChallenge/
 │   ├── 001 … 008        tablas, constraints, índices y triggers
 │   ├── 009 … 010        datos de catálogos y datos de prueba
 │   ├── 011              login de la aplicación
-│   └── storedProcedures/
+│   └── storedProcedures/ 012 … 022: un archivo por módulo, con sus vistas y funciones
 ├── backend/
 │   └── src/
 │       ├── config/       variables de entorno validadas
 │       ├── db/           pool de conexión y ejecutarSP
-│       ├── middlewares/  validación y manejo de errores
-│       └── ...
+│       ├── docs/         documento OpenAPI armado con los esquemas Zod
+│       ├── errors/       AppError: error con su código HTTP
+│       ├── jobs/         liberación de reservas vencidas, cada minuto
+│       ├── middlewares/  autenticación y roles, validación y manejo de errores
+│       ├── modulos/      auth, catalogo, inventario, carrito, cupones, direcciones,
+│       │                 checkout, pedidos, reportes, bitacora y usuarios; cada uno con
+│       │                 sus rutas, controlador, servicio, repositorio y esquemas
+│       ├── tipos/        tipos de la sesión y del usuario autenticado
+│       ├── utils/        esquemas comunes y paginación
+│       ├── app.ts        Express: cabeceras de seguridad, CORS, Swagger y rutas
+│       ├── rutas.ts      registro de los módulos bajo /api
+│       └── server.ts     arranque, tarea de reservas y cierre ordenado
+├── frontend/
+│   └── src/
+│       ├── api/          cliente HTTP (token, renovación, errores) y funciones por módulo
+│       ├── auth/         sesión, roles y rutas protegidas
+│       ├── componentes/  piezas comunes: tabla, filtros, modal, campos, estados
+│       ├── estilos/      variables de diseño y estilos base
+│       ├── hooks/        listados con filtros en la URL, carrito, cuenta regresiva
+│       ├── layouts/      tienda, cuenta del cliente y panel
+│       └── paginas/      tienda, compra, cuenta y panel
 └── docs/                diagrama ER y ciclo de vida del pedido (draw.io)
 ```
 
@@ -73,6 +97,20 @@ En `.env`, `DB_PASSWORD` es la misma contraseña usada en el `011`, y `JWT_ACCES
 
 Comprobación: `GET http://localhost:3000/api/salud`.
 
+### Frontend
+
+Con la API corriendo:
+
+```bash
+cd frontend
+npm install
+npm run dev
+```
+
+Abre en `http://localhost:5173`. Vite pasa todo lo que va a `/api` a `http://localhost:3000`, así que el navegador ve un solo origen y la cookie del refresh token funciona sin configurar CORS.
+
+Versión de producción: `npm run build` deja los archivos en `frontend/dist`, y `npm run preview` los sirve en `http://localhost:4173` con el mismo paso de `/api` hacia la API.
+
 ## Credenciales de prueba
 
 Contraseña para todos: `ShopCart2026!`
@@ -84,7 +122,9 @@ Contraseña para todos: `ShopCart2026!`
 | Cliente | cliente1@shopcart.com |
 | Cliente | cliente2@shopcart.com |
 
-Cupones de prueba: `BIENVENIDA10`, `DESCUENTO50` (mínimo Q300), `DEPORTES15` (solo Deportes), `VERANO2025` (vencido) y `ULTIMOUSO` (un solo uso, para probar concurrencia). Las variantes `BOT-42-CAF` y `BAL-5` tienen una sola unidad y `JEA-34-AZO` está agotada.
+Cupones de prueba: `BIENVENIDA10`, `DESCUENTO50` (mínimo Q300), `DEPORTES15` (solo Deportes, mínimo Q200), `VERANO2025` (vencido) y `ULTIMOUSO` (un solo uso, para probar concurrencia). Las variantes `BOT-42-CAF` y `BAL-5` tienen una sola unidad y `JEA-34-AZO` está agotada.
+
+Las fotos de los productos de prueba son de [Unsplash](https://unsplash.com/license), de uso libre, y se cargan por su dirección web.
 
 ## Modelo de datos
 
@@ -208,6 +248,48 @@ Editable en draw.io: [`docs/ciclo-vida-pedido.drawio`](docs/ciclo-vida-pedido.dr
 | Rotación | Cada refresh revoca el token usado. Si llega uno ya revocado, se revoca toda la sesión | Detecta el robo de un refresh token |
 | Login | Mismo mensaje y mismo tiempo de respuesta si el correo no existe o la contraseña está mal | No permite averiguar qué correos están registrados |
 | Access token | JWT HS256 de 15 minutos; no se consulta la BD en cada petición | Un usuario desactivado conserva acceso como máximo 15 minutos; su refresh ya no funciona |
+
+## Frontend
+
+### Pantallas por rol
+
+| Rol | Qué puede hacer |
+|---|---|
+| Visitante | Catálogo con búsqueda, filtros (categoría, precio, existencia) y orden; detalle con selección de talla y color; carrito con cupón sin crear cuenta |
+| Cliente | Lo anterior, y además: al entrar, su carrito se une al de invitado; direcciones; checkout con reserva de 15 minutos y cuenta regresiva; pago simulado; Mis pedidos con seguimiento y cancelación |
+| Operador | Panel de pedidos (cambio de estado con comentario, devoluciones por línea con el reembolso estimado), inventario (existencias, kardex, entradas, ajustes y conciliación) y el catálogo en solo lectura |
+| Administrador | Todo lo del Operador, y además: dashboard, catálogo (categorías, productos, imágenes y variantes), cupones, usuarios y bitácora |
+
+### Decisiones del frontend
+
+| Tema | Decisión | Motivo |
+|---|---|---|
+| Access token | En memoria, nunca en `localStorage`; al recargar la página se pide uno nuevo con la cookie del refresh | Un script inyectado no lo encuentra guardado |
+| Renovación | Una sola a la vez, también entre pestañas (`navigator.locks`); una petición que recibe 401 se repite una vez con el token nuevo | Con rotación, dos renovaciones simultáneas harían que la API revocara la sesión |
+| Filtros, orden y página | Viven en la URL | Se pueden compartir, sobreviven a recargar y el botón Atrás funciona |
+| Carrito de invitado | Su token se guarda en `localStorage` y viaja en `X-Carrito-Token`; al iniciar sesión se fusiona y se borra | El carrito sobrevive a cerrar el navegador |
+| Totales del carrito | Cada cambio reemplaza la caché con la respuesta de la API; si hay varios cambios en vuelo, el último vuelve a consultar | La pantalla nunca muestra un total calculado en el navegador |
+| Cuenta regresiva | Usa los segundos restantes que manda la API, no la hora del equipo | Un reloj mal configurado no adelanta ni atrasa la reserva |
+| Idempotency-Key | `crypto.randomUUID()` una vez por intento de pago; un reintento manda la misma | Un doble clic o un corte de red no cobran dos veces |
+| Errores | Un 400 se muestra junto a cada campo; un 409 o 422, arriba del formulario; un 429 dice cuántos minutos esperar | El usuario sabe qué corregir |
+| Permisos en pantalla | Las rutas se protegen por rol; el Operador ve el catálogo con los campos bloqueados | La API valida de todos modos; el frontend solo evita ofrecer lo que no se puede usar |
+| Carga | La tienda se descarga primero; cada página del panel y Recharts se descargan al entrar | El cliente no descarga código del panel |
+| Estados de cada vista | Cargando, vacío, error con "Reintentar" y, al cambiar filtros o página, los datos anteriores atenuados mientras llegan los nuevos | La pantalla no salta ni se queda en blanco |
+| Fechas | Se muestran en hora de Guatemala; las de los cupones se capturan en esa hora | Coinciden con los reportes, que también usan días de Guatemala |
+| Diseño | Variables en `estilos/tokens.css`: fondo hueso, verde botella como marca, terracota solo para descuentos y alertas; Fraunces en títulos e IBM Plex Sans en el texto | Identidad propia; el panel es denso, como un sistema interno |
+
+## Guion de demo
+
+Unos 10 minutos, con las cuentas de [Credenciales de prueba](#credenciales-de-prueba).
+
+1. **Invitado.** Buscar "balon" (encuentra "Balón" aunque no lleve tilde). Quitar la búsqueda, filtrar por Deportes, abrir "Playera Deportiva Dry", elegir talla y color y agregar dos unidades. En el carrito, aplicar `VERANO2025` (dice que venció) y después `DEPORTES15`, que pide Q200 de compra y por eso van dos playeras.
+2. **Entrar como `cliente1`.** El aviso confirma que el carrito de invitado se unió al suyo.
+3. **Checkout.** Elegir o crear una dirección; la reserva muestra la cuenta regresiva de 15 minutos. Pagar: el pedido queda confirmado con su referencia. Recargar el checkout a medio pago retoma la misma reserva.
+4. **Mis pedidos.** Detalle y seguimiento del pedido nuevo.
+5. **Entrar como `operador`.** En Pedidos, abrir el pedido y llevarlo a En preparación → Despachado (con la guía en el comentario) → Entregado. Registrar la devolución de una unidad: el reembolso estimado coincide con el que calcula la API.
+6. **Inventario.** El kardex de esa variante muestra la venta y la devolución. "Conciliar con el kardex" confirma que la existencia de cada variante cuadra con sus movimientos.
+7. **Entrar como `admin`.** Dashboard: cambiar el rango, agrupar por semana, ver solo entregados. Crear un producto con imágenes y una variante con existencia inicial (queda como entrada en el kardex). Crear un cupón. En Usuarios, "Actividad" abre la bitácora de esa persona con el antes y después de cada cambio.
+8. **Concurrencia (opcional).** Dos ventanas, una en incógnito, con `cliente1` y `cliente2` y la variante `BAL-5` (una unidad) en el carrito: el primero que inicia el pago la reserva y el segundo recibe el aviso de cuántas quedan.
 
 ## API
 
@@ -361,7 +443,7 @@ Operador y Administrador.
 
 | Método | Ruta | Descripción |
 |---|---|---|
-| GET | `/admin/pedidos` | Listado paginado. Filtros: `estado`, `idCliente`, `cliente` (nombre o correo), `fechaDesde`, `fechaHasta` |
+| GET | `/admin/pedidos` | Listado paginado. Filtros: `estado`, `idCliente`, `cliente` (nombre o correo), `fechaDesde`, `fechaHasta`. `orden`: `recientes` (por defecto), `antiguos`, `total_desc`, `total_asc` |
 | GET | `/admin/pedidos/:id` | Detalle de cualquier pedido |
 | PATCH | `/admin/pedidos/:id/estado` | `{ "estado": "DESPACHADO", "comentario": "Guía 123" }`. Estados permitidos: `EN_PREPARACION`, `DESPACHADO`, `ENTREGADO`, `CANCELADO` |
 | POST | `/admin/pedidos/:id/devoluciones` | `{ "motivo": "Talla incorrecta", "lineas": [{ "idPedidoDetalle": 7, "cantidad": 1 }] }` |

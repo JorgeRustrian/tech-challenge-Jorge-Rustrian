@@ -20,6 +20,8 @@ export const ESTADOS_PEDIDO = [
 
 export type EstadoPedido = (typeof ESTADOS_PEDIDO)[number];
 
+export const ORDENES_PEDIDOS = ['recientes', 'antiguos', 'total_desc', 'total_asc'] as const;
+
 export const listarMisPedidosSchema = z
   .object({
     estado: z.enum(ESTADOS_PEDIDO).optional(),
@@ -33,6 +35,7 @@ export const listarPedidosSchema = z
     estado: z.enum(ESTADOS_PEDIDO).optional(),
     idCliente: z.coerce.number().int().positive().optional(),
     cliente: textoBusqueda,
+    orden: z.enum(ORDENES_PEDIDOS).default('recientes'),
     ...camposRangoFechas,
     ...camposPaginacion,
   })
