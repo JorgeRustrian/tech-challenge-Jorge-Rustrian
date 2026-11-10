@@ -34,13 +34,23 @@ techChallenge/
 │   ├── 001 … 008        tablas, constraints, índices y triggers
 │   ├── 009 … 010        datos de catálogos y datos de prueba
 │   ├── 011              login de la aplicación
-│   └── storedProcedures/
+│   └── storedProcedures/ 012 … 022: un archivo por módulo, con sus vistas y funciones
 ├── backend/
 │   └── src/
 │       ├── config/       variables de entorno validadas
 │       ├── db/           pool de conexión y ejecutarSP
-│       ├── middlewares/  validación y manejo de errores
-│       └── ...
+│       ├── docs/         documento OpenAPI armado con los esquemas Zod
+│       ├── errors/       AppError: error con su código HTTP
+│       ├── jobs/         liberación de reservas vencidas, cada minuto
+│       ├── middlewares/  autenticación y roles, validación y manejo de errores
+│       ├── modulos/      auth, catalogo, inventario, carrito, cupones, direcciones,
+│       │                 checkout, pedidos, reportes, bitacora y usuarios; cada uno con
+│       │                 sus rutas, controlador, servicio, repositorio y esquemas
+│       ├── tipos/        tipos de la sesión y del usuario autenticado
+│       ├── utils/        esquemas comunes y paginación
+│       ├── app.ts        Express: cabeceras de seguridad, CORS, Swagger y rutas
+│       ├── rutas.ts      registro de los módulos bajo /api
+│       └── server.ts     arranque, tarea de reservas y cierre ordenado
 ├── frontend/
 │   └── src/
 │       ├── api/          cliente HTTP (token, renovación, errores) y funciones por módulo
@@ -113,6 +123,8 @@ Contraseña para todos: `ShopCart2026!`
 | Cliente | cliente2@shopcart.com |
 
 Cupones de prueba: `BIENVENIDA10`, `DESCUENTO50` (mínimo Q300), `DEPORTES15` (solo Deportes, mínimo Q200), `VERANO2025` (vencido) y `ULTIMOUSO` (un solo uso, para probar concurrencia). Las variantes `BOT-42-CAF` y `BAL-5` tienen una sola unidad y `JEA-34-AZO` está agotada.
+
+Las fotos de los productos de prueba son de [Unsplash](https://unsplash.com/license), de uso libre, y se cargan por su dirección web.
 
 ## Modelo de datos
 
